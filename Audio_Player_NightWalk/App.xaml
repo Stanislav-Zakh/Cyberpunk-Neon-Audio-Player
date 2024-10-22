@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:Audio_Player_NightWalk"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="PublicResources/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="PublicResources/Styles/VectorIcons.xaml"/>
+                <ResourceDictionary Source="PublicResources/Styles/Buttons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+
     </Application.Resources>
 </Application>

@@ -1,5 +1,9 @@
 ﻿using Audio_Player_NightWalk.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -10,19 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Audio_Player_NightWalk
+namespace Audio_Player_NightWalk.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for LocalMediaPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class LocalMediaPage : Page
     {
-        public MainWindow()
+        public LocalMediaPage()
         {
             InitializeComponent();
 
-            this.DataContext = new BasicWindowViewModel(this);
-
+            this.DataContext = new LocalMediaViewModel();
         }
     }
 }

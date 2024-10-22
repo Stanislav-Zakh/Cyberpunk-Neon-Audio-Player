@@ -4,12 +4,135 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Audio_Player_NightWalk"
+        WindowStyle="None"
+        AllowsTransparency="True"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
-        
-        
 
-    </Grid>
+    <Window.Resources>
+        
+        <Style TargetType="{x:Type local:MainWindow}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+
+                        <Border Padding="{Binding OuterPadding}">
+
+
+                            <Grid>
+                                <!-- Opacity mask ANd Border -->
+                                <Border Background="Aqua" x:Name="Container" CornerRadius="{Binding WindowCornerRadious}" />
+
+                                <!-- Window BackGround and Shadow -->
+                                <Border Background="Aqua" CornerRadius="{Binding WindowCornerRadious}">
+                                <Border.Effect>
+                                    <DropShadowEffect ShadowDepth="3"/>
+
+                                </Border.Effect>
+                                </Border>
+
+                                <!--#region Desing of the application Window-->
+                                <Grid>
+
+                                    <Grid.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=Container}"/>
+                                    </Grid.OpacityMask>
+
+                                    <Grid.RowDefinitions>
+                                        <!-- Header-->
+                                        <RowDefinition Height="{Binding ChromeCaptionHeight}"/>
+                                        <!-- Shadow -->
+                                        <RowDefinition Height="Auto"/>
+                                        <!-- Application Content -->
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid Grid.Row="0" Background="Bisque">
+                                        <Grid.ColumnDefinitions>
+                                            <!-- Label -->
+                                            <ColumnDefinition Width="Auto"/>
+                                            <!-- Application Header Name -->
+                                            <ColumnDefinition Width="*"/>
+                                            <!-- Window State Controls -->
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <!-- Label -->
+                                        <Button Grid.Column="0">
+                                            
+                                        </Button>
+
+                                        <!-- Application Header Name -->
+                                        <Viewbox Grid.Column="0" Grid.ColumnSpan="3">
+                                            <TextBlock Text="Hello World"/>
+                                        </Viewbox>
+
+                                        <!-- Window State Controls -->
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+
+                                            <!-- minimize-->
+                                            <Button Style="{StaticResource WindowStateButton}" Command="{Binding MinimizeWindowCommand}">
+                                                <Viewbox >
+                                                    <Path Style="{StaticResource ButtonIconMinimizeWindow}"/>
+                                                </Viewbox>
+                                            </Button>
+
+                                            <!-- maximize -->
+                                            <Button Style="{StaticResource WindowStateButton}" Command="{Binding MaximizeWindowCommand}">
+                                                <Viewbox>
+                                                    <Path Style="{StaticResource ButtonIconMaximizeWindow}"/>
+                                                </Viewbox>
+                                            </Button>
+
+                                            <!-- close -->
+                                            <Button Style="{StaticResource WindowCloseButton}" Command="{Binding CloseWindowCommand}">
+                                                <Viewbox>
+                                                    <Path Style="{StaticResource ButtonIconCloseWindow}"/>
+                                                </Viewbox>
+                                            </Button>
+
+                                        </StackPanel>
+                                        
+                                    </Grid> <!-- Header End -->
+
+
+                                    
+                                    <!-- Window Content -->
+                                    <Border Grid.Row="2">
+
+                                        <ContentPresenter Content="{TemplateBinding Content}"/>
+
+                                    </Border> 
+                                    
+                                </Grid>
+
+                            </Grid>
+
+
+                        </Border>
+
+                    </ControlTemplate>
+                    
+                </Setter.Value>
+                
+                
+            </Setter> 
+            
+            
+            
+        </Style>
+        
+        
+    </Window.Resources>
+    
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="{Binding ChromeResizeBorderThinkness}" 
+                      CaptionHeight="{Binding ChromeCaptionHeight }" 
+                      GlassFrameThickness="0"
+                      />
+    </WindowChrome.WindowChrome>
+
+    <Frame Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
+
 </Window>
