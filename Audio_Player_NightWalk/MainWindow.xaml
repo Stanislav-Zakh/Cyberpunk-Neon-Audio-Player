@@ -7,7 +7,7 @@
         WindowStyle="None"
         AllowsTransparency="True"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="1200">
 
     <Window.Resources>
         
@@ -21,10 +21,10 @@
 
                             <Grid>
                                 <!-- Opacity mask ANd Border -->
-                                <Border Background="Aqua" x:Name="Container" CornerRadius="{Binding WindowCornerRadious}" />
+                                <Border Background="Black" x:Name="Container" CornerRadius="{Binding WindowCornerRadious}" />
 
                                 <!-- Window BackGround and Shadow -->
-                                <Border Background="Aqua" CornerRadius="{Binding WindowCornerRadious}">
+                                <Border Background="Black" CornerRadius="{Binding WindowCornerRadious}">
                                 <Border.Effect>
                                     <DropShadowEffect ShadowDepth="3"/>
 
@@ -133,6 +133,56 @@
                       />
     </WindowChrome.WindowChrome>
 
-    <Frame Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
+
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                
+
+            </Grid.ColumnDefinitions>
+
+            <Frame Grid.Column="1" Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
+
+            <local:PlayListManager DataContext="{x:Static local:PlayListManagerViewModel.Instance}" Width="250" Grid.Column="0">
+                <local:TreeControl/>
+            </local:PlayListManager>
+        </Grid>
+
+
+        <StackPanel DataContext="{x:Static local:DashBoardViewModel.Instance}"  Grid.Row="0" Orientation="Horizontal">
+
+            <Border x:Name="ClipBoarder"   ClipToBounds="True" Background="#333333" Width="80" Height="80">
+                <Viewbox>
+                    <Image  Source="{Binding Cover}"/>
+                </Viewbox>
+            </Border>
+
+            <StackPanel Background="#333333">
+                <TextBlock Foreground="White" Width="120" Text="{Binding Title}"/>
+                <TextBlock Foreground="White" Width="120" Text="{Binding Duration}"/>
+                <TextBlock Foreground="White" Width="120" Text="{Binding Artist}"/>
+                <TextBlock Foreground="White" Width="120" Text="{Binding Genre}"/>
+            </StackPanel>
+            
+
+        </StackPanel>
+
+
+
+    </Grid>
+        
+
+
 
 </Window>

@@ -40,7 +40,7 @@ namespace Audio_Player_NightWalk.ViewModels
         /// <summary>
         /// Size of the Application Header
         /// </summary>
-        public int ChromeCaptionHeight { get; set; } = 45;
+        public int ChromeCaptionHeight { get; set; } = 30;
 
         /// <summary>
         /// Corner Radious of the visible window.

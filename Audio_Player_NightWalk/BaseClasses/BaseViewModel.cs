@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Audio_Player_NightWalk.BaseClasses
+namespace Audio_Player_NightWalk
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

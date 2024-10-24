@@ -9,6 +9,16 @@ namespace Audio_Player_NightWalk
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            FileManager.CreateDefaultDirectoryIfNotExist();
+
+            this.MainWindow = new MainWindow();
+            this.MainWindow.Show();
+
+        }
     }
 
 }
