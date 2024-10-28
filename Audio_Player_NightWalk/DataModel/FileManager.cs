@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -6,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using System.Xml.Linq;
 
 namespace Audio_Player_NightWalk
 {
@@ -97,12 +100,12 @@ namespace Audio_Player_NightWalk
 
             return null;
         }
-
-        public static ObservableCollection<TrackViewModel> GetTracks(string filepath, PlayListViewModel parent)
+        
+        public static ObservableCollectionRange<TrackViewModel> GetTracks(string filepath, PlayListViewModel parent)
         {
 
           
-            var collection = new ObservableCollection<TrackViewModel>();
+            var collection = new ObservableCollectionRange<TrackViewModel>();
 
 
             try
@@ -121,6 +124,64 @@ namespace Audio_Player_NightWalk
             }
 
             return collection;
+        }
+
+
+        public static void OpenFileDialogAddTracks(PlayListViewModel PlayList)
+        {
+           OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            openFileDialog.InitialDirectory = $"D:{Path.DirectorySeparatorChar}Down{Path.DirectorySeparatorChar}";
+            openFileDialog.Multiselect = true;
+            openFileDialog.Filter = "Audio files (*.mp3)|*.mp3|All files (*.*)|*.*";
+
+            if (!openFileDialog.ShowDialog() ?? true)
+                 return;
+
+            string[] filePaths = openFileDialog.FileNames;
+
+            if (filePaths.Length < 1)
+                return;
+
+            // move filepaths
+            List<TrackViewModel> tracks = new List<TrackViewModel>();   
+
+            foreach (string path in filePaths)
+            {
+                var name = path.Substring(path.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+
+               
+                MoveTrack(path, PlayList.Path, name);
+               
+                
+                tracks.Add(new TrackViewModel(name, PlayList));
+            }
+
+            PlayList.AddTracks(tracks);    
+        }
+
+
+        private static void MoveTrack(string OldPath, string NewPath, string name)
+        {
+            var count = 2;
+            string NewFileName = $"{NewPath}{Path.DirectorySeparatorChar}{name}";
+
+            while (File.Exists(NewFileName))
+            {
+                NewFileName = $"{NewPath}{Path.DirectorySeparatorChar}({count}) {name}";
+
+                count++;
+            }
+            try
+            {
+                File.Copy(OldPath, NewFileName);
+
+            }
+            catch (IOException e)
+            {
+                Debug.WriteLine(e);
+                Debugger.Break();
+            }
         }
 
 

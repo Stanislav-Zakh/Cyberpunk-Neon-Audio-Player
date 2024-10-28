@@ -11,7 +11,7 @@
 
         <ControlTemplate>
 
-            <Border Background="Aqua">
+            <Border Background="#00FFFF">
 
                 <DockPanel LastChildFill="False">
                     
@@ -21,17 +21,22 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         
                         <!--#region  Buttons-->
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
                             <Button Content="New Playlist" Command="{Binding AddNewPlayList}"/>
-                            <Button Content="Add File's"/>
+                            <Button Content="Add File's" Command="{Binding AddTracks}"/>
                             <Button Content="Sort"/>
                         </StackPanel>
                         <!--#endregion-->
                         
                         <!--#region TextBox-->
-                        <TextBox Grid.Column="1"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                         <!--#endregion-->
                          
                     </Grid>

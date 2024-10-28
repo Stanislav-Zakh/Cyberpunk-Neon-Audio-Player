@@ -22,6 +22,8 @@ namespace Audio_Player_NightWalk
         /// </summary>
         public ICommand AddNewPlayList { get; set; }
 
+        public ICommand AddTracks { get; set; }
+
         public PlayListManagerViewModel()
         {
 
@@ -35,6 +37,18 @@ namespace Audio_Player_NightWalk
                         PlayList.testCollection.Add(playlist);
                 }           
             );
+
+            AddTracks = new RelayCommand(() =>
+            {
+                if (PlayerStateViewModel.PlayerState.SelectedPlaylist == null)
+                    // Show Message
+                    return;
+
+                FileManager.OpenFileDialogAddTracks(PlayerStateViewModel.PlayerState.SelectedPlaylist);
+
+            });
+
+
 
         }
 

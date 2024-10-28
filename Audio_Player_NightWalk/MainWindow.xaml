@@ -140,6 +140,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
 
         </Grid.RowDefinitions>
 
@@ -152,23 +153,28 @@
 
             </Grid.ColumnDefinitions>
 
-            <Frame Grid.Column="1" Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
+            <DockPanel Grid.Column="1">
+                <StackPanel DockPanel.Dock="Top" Height="30" Background="White"/>
+                <Frame DockPanel.Dock="Bottom" Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
+            </DockPanel>
 
-            <local:PlayListManager DataContext="{x:Static local:PlayListManagerViewModel.Instance}" Width="250" Grid.Column="0">
+            
+
+            <local:PlayListManager DataContext="{x:Static local:PlayListManagerViewModel.Instance}" Width="350"  Grid.Column="0">
                 <local:TreeControl/>
             </local:PlayListManager>
         </Grid>
 
-
+         <!--
         <StackPanel DataContext="{x:Static local:DashBoardViewModel.Instance}"  Grid.Row="0" Orientation="Horizontal">
 
-            <Border x:Name="ClipBoarder"   ClipToBounds="True" Background="#333333" Width="80" Height="80">
+            <Border x:Name="ClipBoarder"   ClipToBounds="True" Background="#333333" Width="30" Height="30">
                 <Viewbox>
                     <Image  Source="{Binding Cover}"/>
                 </Viewbox>
             </Border>
 
-            <StackPanel Background="#333333">
+            <StackPanel Orientation="Horizontal" Background="#333333">
                 <TextBlock Foreground="White" Width="120" Text="{Binding Title}"/>
                 <TextBlock Foreground="White" Width="120" Text="{Binding Duration}"/>
                 <TextBlock Foreground="White" Width="120" Text="{Binding Artist}"/>
@@ -177,9 +183,9 @@
             
 
         </StackPanel>
+         -->
 
-
-
+        <local:PlayerControl Grid.Row="2"/>
     </Grid>
         
 

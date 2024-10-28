@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="PublicResources/Styles/Colors.xaml"/>
+                <ResourceDictionary Source="PublicResources/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/VectorIcons.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/TreeView.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/Buttons.xaml"/>

@@ -9,11 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="PublicResources\Images\" />
+    <None Remove="PublicResources\Fonts\Font Awesome.otf" />
+    <None Remove="PublicResources\Images\rainy-background.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="PublicResources\Fonts\Font Awesome.otf" />
+    <Resource Include="PublicResources\Images\rainy-background.jpg" />
   </ItemGroup>
 
 </Project>
