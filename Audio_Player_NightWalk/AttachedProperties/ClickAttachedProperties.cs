@@ -37,4 +37,10 @@ namespace Audio_Player_NightWalk
     }
 
 
+    public class isPressed : BaseAttachedProperty<isPressed, bool>
+    {
+
+    }
+
+
 }

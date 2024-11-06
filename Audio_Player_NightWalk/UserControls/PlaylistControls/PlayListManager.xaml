@@ -11,7 +11,7 @@
 
         <ControlTemplate>
 
-            <Border Background="#00FFFF">
+            <Border Background="{StaticResource StormyNightBrush}">
 
                 <DockPanel LastChildFill="False">
                     
@@ -29,14 +29,15 @@
                         
                         <!--#region  Buttons-->
                         <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button Content="New Playlist" Command="{Binding AddNewPlayList}"/>
-                            <Button Content="Add File's" Command="{Binding AddTracks}"/>
-                            <Button Content="Sort"/>
+                            <Button Content="New Playlist" Style="{StaticResource ApplicationControlButton}" FontSize="10" Command="{Binding AddNewPlayList}"/>
+                            <Button Content="Add File's" Style="{StaticResource ApplicationControlButton}" FontSize="10" Command="{Binding AddTracks}"/>
+                            <Button Content="Sort" Style="{StaticResource ApplicationControlButton}" FontSize="10"/>
+                            <Button Content="Details" Style="{StaticResource ApplicationControlButton}" FontSize="10"/>
                         </StackPanel>
                         <!--#endregion-->
                         
                         <!--#region TextBox-->
-                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
                         <!--#endregion-->
                          
                     </Grid>

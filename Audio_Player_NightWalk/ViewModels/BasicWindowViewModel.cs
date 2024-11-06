@@ -24,7 +24,9 @@ namespace Audio_Player_NightWalk.ViewModels
         #region Public Properties
 
 
-        public CurrentPageType SelectedPage { get; set; } = CurrentPageType.LocalMedia;
+        public string PlayerTitle { get; set; } = "StormFront";
+
+        
 
         public int ChromeResizeBorderThinkness { get; set; } = 10;
 

@@ -20,9 +20,26 @@ namespace Audio_Player_NightWalk
     /// </summary>
     public partial class PlayerControl : UserControl
     {
+
+        private PlayerStateViewModel playerStateViewModel = PlayerStateViewModel.Instance;
+
         public PlayerControl()
         {
             InitializeComponent();
+
+        }
+
+        private void Slider_DragStarted(object sender, System.Windows.Controls.Primitives.DragStartedEventArgs e)
+        {
+            
+
+            this.playerStateViewModel.setDragged();
+
+        }
+
+        private void Slider_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            this.playerStateViewModel.AdjustDuration((float) ((Slider) sender).Value);
         }
     }
 }

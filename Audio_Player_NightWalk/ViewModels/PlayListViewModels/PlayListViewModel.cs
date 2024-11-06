@@ -78,7 +78,22 @@ namespace Audio_Player_NightWalk
         #endregion
 
 
-        #region 
+        #region
+
+        private TrackViewModel _selectedTrack;
+
+        public TrackViewModel SelectedTrack
+        {
+            get { return _selectedTrack; }
+            set 
+            {          
+                _selectedTrack = value;
+                PlayerStateViewModel.Instance.SelectTrack(_selectedTrack);
+            }
+        }
+
+
+        
 
         private bool _doubleClicked = false;
 
@@ -96,8 +111,7 @@ namespace Audio_Player_NightWalk
 
                 if (_doubleClicked)
                 {
-                    PlayerStateViewModel.PlayerState.SelectedPlaylist = this;
-                  
+                    PlayerStateViewModel.Instance.SelectPlaylist(this);                  
                 }
 
             }
@@ -150,6 +164,58 @@ namespace Audio_Player_NightWalk
         {
             Tracks.AddRange(newTracks);
         }
+
+        public void setSelectedTrack(TrackViewModel track)
+        {
+            if (SelectedTrack != null)
+                this.SelectedTrack.DoubleClicked = false;
+
+            this.SelectedTrack = track;
+        }
+
+        private int findTrackIndex()
+        {
+            return 0;
+        }
+
+        public void GetNextTrack()
+        {
+            if (this.SelectedTrack == null)
+                return;
+
+           
+            var ind = this.Tracks.IndexOf(this.SelectedTrack);
+
+            if ((ind += 1) == Tracks.Count)
+            {
+                Tracks[0].DoubleClicked = true;
+            } else
+            {
+                Tracks[ind].DoubleClicked = true; // TODO hardCoded remove later
+            }
+ 
+        }
+
+        public void GetPreviousTrack()
+        {
+            if (this.SelectedTrack == null)
+                return;
+
+           
+
+            var ind = this.Tracks.IndexOf(this.SelectedTrack);
+
+            if (ind == 0)
+            {
+                Tracks[Tracks.Count - 1].DoubleClicked = true;
+            }
+            else
+            {
+                Tracks[ind - 1].DoubleClicked = true; // TODO hardCoded remove later
+            }
+
+        }
+
 
 
 

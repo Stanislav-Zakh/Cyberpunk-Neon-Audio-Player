@@ -11,7 +11,17 @@ namespace Audio_Player_NightWalk
     class PlayListManagerViewModel : BaseViewModel
     {
 
-        public static PlayListManagerViewModel Instance { get; set; } = new PlayListManagerViewModel();
+        private TrackViewModel? focusedtrack = null;
+
+
+        
+
+        
+
+
+
+
+        public static PlayListManagerViewModel Instance { get; private set; } = new PlayListManagerViewModel();
 
 
         public DisplayPlayListViewModel PlayList { get; set; }
@@ -24,7 +34,8 @@ namespace Audio_Player_NightWalk
 
         public ICommand AddTracks { get; set; }
 
-        public PlayListManagerViewModel()
+
+        private PlayListManagerViewModel()
         {
 
             PlayList = new DisplayPlayListViewModel();
@@ -40,16 +51,27 @@ namespace Audio_Player_NightWalk
 
             AddTracks = new RelayCommand(() =>
             {
-                if (PlayerStateViewModel.PlayerState.SelectedPlaylist == null)
+                if (PlayerStateViewModel.Instance.SelectedPlayList == null)
                     // Show Message
                     return;
 
-                FileManager.OpenFileDialogAddTracks(PlayerStateViewModel.PlayerState.SelectedPlaylist);
+                FileManager.OpenFileDialogAddTracks(PlayerStateViewModel.Instance.SelectedPlayList);
 
             });
 
 
 
+        }
+
+
+        public void SetFocusedTrack(TrackViewModel track)
+        {
+            this.focusedtrack = track;
+        }
+
+        public TrackViewModel? GetFocusedTrack()
+        {
+            return this.focusedtrack;
         }
 
 

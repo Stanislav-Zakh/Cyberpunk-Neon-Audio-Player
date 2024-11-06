@@ -32,7 +32,7 @@
                                 </Border>
 
                                 <!--#region Desing of the application Window-->
-                                <Grid>
+                                <Grid >
 
                                     <Grid.OpacityMask>
                                         <VisualBrush Visual="{Binding ElementName=Container}"/>
@@ -47,7 +47,7 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0" Background="Bisque">
+                                    <Grid Grid.Row="0" Background="{StaticResource StormyNightBrush}">
                                         <Grid.ColumnDefinitions>
                                             <!-- Label -->
                                             <ColumnDefinition Width="Auto"/>
@@ -58,13 +58,15 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Label -->
-                                        <Button Grid.Column="0">
+                                        <Button Background="Transparent" Grid.Column="0">
                                             
                                         </Button>
 
                                         <!-- Application Header Name -->
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3">
-                                            <TextBlock Text="Hello World"/>
+                                            <TextBlock Text="{Binding PlayerTitle}" FontSize="10" Style="{StaticResource DataTextPixel}">
+                                                
+                                            </TextBlock>
                                         </Viewbox>
 
                                         <!-- Window State Controls -->
@@ -153,14 +155,31 @@
 
             </Grid.ColumnDefinitions>
 
-            <DockPanel Grid.Column="1">
-                <StackPanel DockPanel.Dock="Top" Height="30" Background="White"/>
-                <Frame DockPanel.Dock="Bottom" Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
+
+            <DockPanel Grid.Column="1" DataContext="{x:Static local:ApplicationViewModel.Instance}">
+                <Grid  DockPanel.Dock="Top" Height="30" Background="Black">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <Button Grid.Column="0" Style="{StaticResource ApplicationControlButton}" Content="Album" Command="{Binding DisplayAlbum}"/>
+                    <Button Grid.Column="2" Style="{StaticResource ApplicationControlButton}" Content="Details" Command="{Binding DisplayDetails}"/>
+                    <Button Grid.Column="4" Style="{StaticResource ApplicationControlButton}" Content="Image Library" Command="{Binding DisplayImages}"/>
+                    <Button Grid.Column="6" Style="{StaticResource ApplicationControlButton}" Content="Visualizer 3D"/>
+
+                </Grid>
+                <Frame NavigationUIVisibility="Hidden" DockPanel.Dock="Bottom"  Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
             </DockPanel>
 
             
 
-            <local:PlayListManager DataContext="{x:Static local:PlayListManagerViewModel.Instance}" Width="350"  Grid.Column="0">
+            <local:PlayListManager  DataContext="{x:Static local:PlayListManagerViewModel.Instance}" Width="350"  Grid.Column="0">
                 <local:TreeControl/>
             </local:PlayListManager>
         </Grid>

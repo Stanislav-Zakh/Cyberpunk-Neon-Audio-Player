@@ -10,7 +10,7 @@ namespace Audio_Player_NightWalk
     public class DashBoardViewModel : BaseViewModel
     {
 
-        public static readonly DashBoardViewModel Instance = new DashBoardViewModel();
+        public static readonly DashBoardViewModel Instance  = new DashBoardViewModel();
 
       
         #region Properties
@@ -80,7 +80,7 @@ namespace Audio_Player_NightWalk
 
 
 
-        public DashBoardViewModel()
+        private DashBoardViewModel()
         {
             
             TagReader.NewFileSelected += () =>

@@ -31,7 +31,14 @@ namespace Audio_Player_NightWalk
             get { return _doubleClicked; }
             set { 
                 _doubleClicked = value;
-                PlayerStateViewModel.PlayerState.SelectedTrack = this;
+
+                OnPropertyChanged(nameof(DoubleClicked));
+
+                if (!DoubleClicked)
+                    return;
+
+                ParentPlayList.setSelectedTrack(this);
+                
             }
         }
 
@@ -77,7 +84,7 @@ namespace Audio_Player_NightWalk
         {
             if (_firstTimeTags)
             {
-                this._audiFileInfo = TagReader.ReadTagsAndReturnInfo(Path.Combine(ParentPlayList.Path, this.Name));
+                this._audiFileInfo = TagReader.ReadTagsAndReturnInfo(this.GetFullPath());
                 _firstTimeTags = false;
             }
 
@@ -93,18 +100,29 @@ namespace Audio_Player_NightWalk
         public AudioFileInfo getTagData()
         {
             if (_firstTimeTags)
-                this._audiFileInfo = TagReader.ReadTagsAndReturnInfo(Path.Combine(ParentPlayList.Path, this.Name));
-
+            {
+                this._audiFileInfo = TagReader.ReadTagsAndReturnInfo(this.GetFullPath());
+                _firstTimeTags = false;
+            }
+                
+                
             return _audiFileInfo;
         } 
 
         public void assignTagDataToPlaylist()
         {
+
+
             ParentPlayList.Title = this._audiFileInfo.Title;
             ParentPlayList.Duration = this._audiFileInfo.Duration;
             ParentPlayList.Artist = this._audiFileInfo.Artist;
             ParentPlayList.Genre = this._audiFileInfo.Genre;
             ParentPlayList.Cover = this._audiFileInfo.Cover;
+        }
+
+        public string GetFullPath()
+        {
+            return Path.Combine(ParentPlayList.Path, this.Name);
         }
         
 

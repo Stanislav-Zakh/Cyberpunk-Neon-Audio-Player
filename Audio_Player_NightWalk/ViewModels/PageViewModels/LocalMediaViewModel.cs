@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Audio_Player_NightWalk.ViewModels
+namespace Audio_Player_NightWalk
 {
     public class LocalMediaViewModel : BaseViewModel
     {

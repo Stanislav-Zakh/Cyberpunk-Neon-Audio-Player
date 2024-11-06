@@ -46,7 +46,7 @@ namespace Audio_Player_NightWalk
 
             SelectedFile = new AudioFileInfo(
                 file.Tag.Title ?? EMPTY,
-                file.Tag.Length ?? EMPTY,
+                file.Properties.Duration.ToString() ?? EMPTY,
                 file.Tag.FirstAlbumArtist ?? EMPTY,
                 file.Tag.FirstGenre ?? EMPTY
                 )
@@ -63,9 +63,10 @@ namespace Audio_Player_NightWalk
         {
              return new AudioFileInfo(
                 file.Tag.Title ?? EMPTY,
-                file.Tag.Length ?? EMPTY,
+                file.Properties.Duration.TotalMinutes.ToString() ?? EMPTY,
                 file.Tag.FirstAlbumArtist ?? EMPTY,
                 file.Tag.FirstGenre ?? EMPTY
+                
                 )
             {
                 Cover = GetImage(file)
@@ -82,7 +83,7 @@ namespace Audio_Player_NightWalk
         {
 
             parent.Title = file.Tag.Title ?? EMPTY;
-            parent.Duration = file.Tag.Length ?? EMPTY;
+            parent.Duration = file.Properties.Duration.ToString() ?? EMPTY;
             parent.Artist = file.Tag.FirstAlbumArtist ?? EMPTY;
             parent.Genre = file.Tag.FirstGenre ?? EMPTY;
             parent.Cover = GetImage(file);

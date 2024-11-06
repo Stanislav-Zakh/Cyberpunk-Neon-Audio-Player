@@ -9,17 +9,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PublicResources\Fonts\DonGraffiti.otf" />
     <None Remove="PublicResources\Fonts\Font Awesome.otf" />
+    <None Remove="PublicResources\Fonts\MAELS___.TTF" />
+    <None Remove="PublicResources\Fonts\PIXY.otf" />
+    <None Remove="PublicResources\Fonts\terminal-grotesque_open.otf" />
     <None Remove="PublicResources\Images\rainy-background.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
+    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="NAudio.WaveFormRenderer" Version="2.0.0" />
     <PackageReference Include="TagLibSharp" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="PublicResources\Fonts\DonGraffiti.otf" />
     <Resource Include="PublicResources\Fonts\Font Awesome.otf" />
+    <Resource Include="PublicResources\Fonts\MAELS___.TTF" />
+    <Resource Include="PublicResources\Fonts\PIXY.otf" />
+    <Resource Include="PublicResources\Fonts\terminal-grotesque_open.otf" />
     <Resource Include="PublicResources\Images\rainy-background.jpg" />
   </ItemGroup>
 

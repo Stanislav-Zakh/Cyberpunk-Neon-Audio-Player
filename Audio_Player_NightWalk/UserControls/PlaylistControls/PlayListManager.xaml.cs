@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,15 @@ namespace Audio_Player_NightWalk
     /// </summary>
     public partial class PlayListManager : UserControl
     {
+
+       
+
         public PlayListManager()
         {
             InitializeComponent();
         }
+
+
+       
     }
 }
