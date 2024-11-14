@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="PublicResources/Styles/Fonts.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/VectorIcons.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/Text.xaml"/>
+                <ResourceDictionary Source="PublicResources/Styles/TabControl.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/Sliders.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/TreeView.xaml"/>
                 <ResourceDictionary Source="PublicResources/Styles/Buttons.xaml"/>

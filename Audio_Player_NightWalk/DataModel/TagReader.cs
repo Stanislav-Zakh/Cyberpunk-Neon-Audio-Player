@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
@@ -14,82 +15,163 @@ namespace Audio_Player_NightWalk
     public static class TagReader
     {
 
-        private static readonly string EMPTY = "unknown";
-
-        public static AudioFileInfo SelectedFile = new AudioFileInfo();
-
-        public static event Action NewFileSelected = () => { };
-
-        public static void ReadTagsFromPath(string filePath)
-        {
-
-            if (!filePath.EndsWith(".mp3"))
-                return;
-
-
-           var file = TagLib.File.Create(filePath);
-
-            FormatTagsAndAssignToSelected(file);
-
-            NewFileSelected.Invoke();
-
-        }
+        private static Stream? stream = null;
 
         /// <summary>
-        /// Read Tags and set them to the 
+        /// Substitude Value for the empty Tags. 
         /// </summary>
-        /// <param name="file"></param>
-        private static void FormatTagsAndAssignToSelected(TagLib.File file)
+        private static readonly string EMPTY = "unknown";
+
+        /// <summary>
+        /// File that is being edited and soon to be closed.
+        /// </summary>
+        private static TagLib.File? _editFile = null;
+
+
+        #region Read Tags (to display in Track)
+
+
+        /// <summary>
+        /// Returns a struct with audio file info.
+        /// </summary>
+        /// <param name="track"></param>
+        /// <param name="playlist"></param>
+        /// <returns></returns>
+
+        public static AudioFileInfo LoadTagInfo(string filepath)
         {
 
+            if (!filepath.EndsWith(".mp3"))
+                throw new IOException("File is not .mp3");
 
 
-            SelectedFile = new AudioFileInfo(
-                file.Tag.Title ?? EMPTY,
-                file.Properties.Duration.ToString() ?? EMPTY,
-                file.Tag.FirstAlbumArtist ?? EMPTY,
-                file.Tag.FirstGenre ?? EMPTY
-                )
+
+            using (var file = TagLib.File.Create(filepath))
             {
-                Cover = GetImage(file) 
-
-            };
-
-            
-
+                return ReadAndFormatTags(file);
+            }     
         }
 
         private static AudioFileInfo ReadAndFormatTags(TagLib.File file)
         {
-             return new AudioFileInfo(
-                file.Tag.Title ?? EMPTY,
-                file.Properties.Duration.TotalMinutes.ToString() ?? EMPTY,
-                file.Tag.FirstAlbumArtist ?? EMPTY,
-                file.Tag.FirstGenre ?? EMPTY
-                
-                )
-            {
-                Cover = GetImage(file)
-
-            };
-
-
-
+            return new AudioFileInfo(
+               file.Tag.Title ?? EMPTY,
+               file.Tag.FirstPerformer ?? EMPTY,
+               FormatRunningTime(file.Properties.Duration),
+               file.Tag.Album ?? EMPTY,
+               file.Tag.Year != 0 ? file.Tag.Year.ToString() : EMPTY,
+               file.Tag.FirstGenre ?? EMPTY
+               )
+            { Cover = GetImage(file) };
         }
 
 
+        #endregion
 
-        private static void ReadAndFormatTags(TagLib.File file, PlayListViewModel parent)
+
+        #region Load Full Tags()
+
+
+        /// <summary>
+        /// Load full info and free resources. 
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public static FullAudiFileInfo LoadFullTagInfo(string filepath)
+        {
+            using (var file = TagLib.File.Create(filepath))
+            {
+                return ExtractAllTags(file);
+            }
+
+        }
+
+        /// <summary>
+        /// Load full info and retain file open file.
+        /// </summary>
+        /// <param name="filepath"></param>
+        /// <returns></returns>
+        public static FullAudiFileInfo LoadFullTagInfoAndEdit(string filepath)
         {
 
-            parent.Title = file.Tag.Title ?? EMPTY;
-            parent.Duration = file.Properties.Duration.ToString() ?? EMPTY;
-            parent.Artist = file.Tag.FirstAlbumArtist ?? EMPTY;
-            parent.Genre = file.Tag.FirstGenre ?? EMPTY;
-            parent.Cover = GetImage(file);
-
+            _editFile = TagLib.File.Create(new StreamAbstraction(filepath, FileManager.GetStream(filepath, FileAccess.ReadWrite)));
+     
+            return ExtractAllTags(_editFile);
+            
         }
 
+        /// <summary>
+        /// Extract tags From the file.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public static FullAudiFileInfo ExtractAllTags(TagLib.File file)
+        {
+            return new FullAudiFileInfo
+                (
+                /// firtstAlbum artis != performers[0]
+                file.Tag.FirstAlbumArtist ?? EMPTY,
+                file.Tag.Title ?? EMPTY,
+                file.Tag.Album ?? EMPTY,
+                file.Tag.Year.ToString() ?? EMPTY,
+                file.Tag.FirstGenre ?? EMPTY,
+                file.Tag.RemixedBy ?? EMPTY
+                );
+        }
+
+
+        #endregion
+
+
+        #region Write Tags to file
+
+        /// <summary>
+        /// Save Edited tags to the File 
+        /// </summary>
+        /// <param name="info"></param>
+        /// <exception cref="Exception"></exception>
+
+        public static void SaveFullInfo(FullAudiFileInfo info, string filepath)
+        {
+            
+            if (_editFile == null)
+                throw new Exception("Cannot be NULL");
+
+            if (_editFile.Tag.Performers.Length > 0)
+            {
+                var perf = _editFile.Tag.Performers;
+                perf[0] = info.Artist;
+
+                _editFile.Tag.Performers = perf;
+            }
+
+            _editFile.Tag.Title = info.Title;
+            _editFile.Tag.Album = info.Album;
+
+            if (_editFile.Tag.Genres.Length > 0)
+            {
+                var genre = _editFile.Tag.Genres;
+
+                genre[0] = info.Genre;
+
+                _editFile.Tag.Genres = genre;
+            }
+                
+
+            _editFile.Tag.RemixedBy = info.Remix;
+
+            _editFile.Save();
+
+            _editFile.Dispose();
+
+            _editFile = null;
+        }
+
+
+        #endregion
+
+
+        #region Utility (ex. get images or format numbers)
 
         /// <summary>
         /// Get the first image if exists, if not return null.
@@ -105,79 +187,205 @@ namespace Audio_Player_NightWalk
             return (ImageSource?)new ImageSourceConverter().ConvertFrom(file.Tag.Pictures[0].Data.Data);
         }
 
-
-
-        #region Using TagReader for TreeView 
-
-
-        public static void ReadTagsAndAssignToTheParent(TrackViewModel track, PlayListViewModel playlist)
+        private static string FormatRunningTime(TimeSpan time)
         {
-            var filepath = Path.Combine(playlist.Path, track.Name);
+            var h = "";
+
+            h = formatTime(time.Hours, h);
+            h = formatTime(time.Minutes, h);
+
+            var l = time.Seconds > 9 ? "" : "0";
+            return $"{h}{l}{time.Seconds}";
 
 
-            if (!filepath.EndsWith(".mp3"))
-                return;
-
-
-            var file = TagLib.File.Create(filepath);
-
-            ReadAndFormatTags(file, playlist);
-
-         
-
-        }
-
-        /// <summary>
-        /// Returns a struct with audio file info.
-        /// </summary>
-        /// <param name="track"></param>
-        /// <param name="playlist"></param>
-        /// <returns></returns>
-
-        public static AudioFileInfo ReadTagsAndReturnInfo(string filepath)
-        {
-
-            if (!filepath.EndsWith(".mp3"))
-                throw new IOException("File is not .mp3"); 
+            string formatTime(int val, string h)
+            {
                 
-
-
-            var file = TagLib.File.Create(filepath);
-
-            return ReadAndFormatTags(file);
-        }
-
-
-
-
+                if (val > 0)
+                    h += val > 9 ? $"{val}:" : $"0{val}:";
+                return h;
+            }
+        } 
 
 
 
         #endregion
 
 
+        #region Other (unfinished but interesting ideas)
+
+        public static AudioFileInfo SelectedFile = new AudioFileInfo();
+
+        public static event Action NewFileSelected = () => { };
+
+        /// <summary>
+        /// Method that assigns tags to the selected file filed and informs any other class that want to consume info on the newly selected track. 
+        /// </summary>
+        /// <param name="filePath"></param>
+
+        public static void ReadTagsFromPath(string filePath)
+        {
+
+            if (!filePath.EndsWith(".mp3"))
+                return;
+
+
+            using (var file = TagLib.File.Create(filePath))
+            {
+                SelectedFile = ReadAndFormatTags(file);
+
+                NewFileSelected.Invoke();
+            }
+        }
+
+        #endregion
+
     }
 
+    #region Tag DTO
 
-    public struct AudioFileInfo
+    /// <summary>
+    /// Smaller class for transfering tag data to the track. 
+    /// </summary>
+
+
+    public class AudioFileInfo
     {
 
-        public string Title { get; }
-        public string Duration { get; }
+        public string Title { get; set; }
 
-        public string Artist { get; }
+        public string Artist { get; set; }
 
-        public string Genre { get; }
+        public string Duration { get; set; }
+
+        public string Album { get; set; }
+       
+        public string Genre { get; set; }
+
+        public string Year { get; set; }
 
         public ImageSource? Cover { get; set; }
 
 
-        public AudioFileInfo(string title, string duration, string artist, string genre)
+        public AudioFileInfo()
+        {
+            
+        }
+
+        public AudioFileInfo(string title, string artist, string duration, string album,  string genre, string year)
         {
             Title = title;
             Duration = duration;
             Artist = artist;
+            Album = album;
             Genre = genre;
+            Year = year;
+        }
+
+    }
+
+    public class FullAudiFileInfo
+    {
+
+        public string Artist { get; set; }
+
+        public string Title { get; set; }
+        public string Album { get; set; }
+
+        public string Date { get; set; }
+
+        public string Genre { get; set; }
+
+        public string Remix { get; set; }
+
+
+        public FullAudiFileInfo(string artist, string title, string album, string date, string genre, string remix)
+        {
+            Artist = artist;
+            Title = title;
+            Album = album;
+            Date = date;
+            Genre = genre;
+            Remix = remix;
+        }
+
+
+
+        public List<FormRowData> GetRows()
+        {
+            return new List<FormRowData>()
+            {
+                new FormRowData("Artis Name", this.Artist),
+                new FormRowData("Track Title", this.Title),
+                new FormRowData("Album Title", this.Album),
+                new FormRowData("Date", this.Date),
+                new FormRowData("Genre", this.Genre),
+                new FormRowData("Remix", this.Remix)
+
+            };
+        }
+
+        public void UpdateData(List<FormRowData> rows)
+        {
+            this.Artist = rows[0].Value;
+            this.Title = rows[1].Value;
+            this.Album = rows[2].Value;
+            this.Date = rows[3].Value;
+            this.Genre = rows[4].Value;
+            this.Remix = rows[5].Value;
+        }
+
+
+    }
+    public class FormRowData
+    {
+        public string Key { get; set; }
+
+        public string Value { get; set; }
+
+        public bool Modifiable { get; private set; }
+
+
+        public FormRowData(string key, string value, bool mod = true)
+        {
+            Key = key;
+            Value = value;
+            Modifiable = mod;
+        }
+
+    }
+
+
+    #endregion
+
+
+
+    public class StreamAbstraction : TagLib.File.IFileAbstraction
+    {
+        private string _path = String.Empty;
+        private Stream _stream;
+
+        public StreamAbstraction(string path, Stream stream)
+        {
+
+            this._path = path;
+            this._stream = stream;       
+
+        }
+
+        public string Name => this._path;
+
+        public Stream ReadStream => this._stream;
+
+        public Stream WriteStream => this._stream;
+
+        /// <summary>
+        /// We should leave this method empty. see github docs. 
+        /// </summary>
+        /// <param name="stream"></param>
+        public void CloseStream(Stream stream)
+        {
+            
         }
     }
 

@@ -11,41 +11,66 @@
 
         <ControlTemplate>
 
-            <Border Background="{StaticResource StormyNightBrush}">
+            <Border Background="{StaticResource StormyNightBrush}" BorderThickness="0">
 
-                <DockPanel LastChildFill="False">
-                    
-                    <Grid DockPanel.Dock="Top">
-                        
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                <TabControl Style="{DynamicResource TabControlSmall}"  SelectedIndex="{Binding Index, Mode=OneWayToSource}" TabStripPlacement="Bottom">
 
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
+                    <TabItem FontFamily="{StaticResource FontAwesome}" Style="{StaticResource TabItemSmall}" Header="&#xf1c7;" FontSize="12">
                         
-                        <!--#region  Buttons-->
-                        <StackPanel Grid.Column="0" Orientation="Horizontal">
-                            <Button Content="New Playlist" Style="{StaticResource ApplicationControlButton}" FontSize="10" Command="{Binding AddNewPlayList}"/>
-                            <Button Content="Add File's" Style="{StaticResource ApplicationControlButton}" FontSize="10" Command="{Binding AddTracks}"/>
-                            <Button Content="Sort" Style="{StaticResource ApplicationControlButton}" FontSize="10"/>
-                            <Button Content="Details" Style="{StaticResource ApplicationControlButton}" FontSize="10"/>
+
+                            <ContentPresenter DockPanel.Dock="Top" Content="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                    </TabItem>
+
+                    <TabItem FontFamily="{StaticResource FontAwesome}" Style="{StaticResource TabItemSmall}" Header="&#xe522;" FontSize="12">
+
+                        <StackPanel DataContext="{Binding Form}">
+                            <!--#region Header -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Column="0" Text="Name"/>
+                                <TextBlock Grid.Column="1" Text="Value"/>
+                            </Grid>
+                            <!--#endregion-->
+
+                            <ListView ItemsSource="{Binding FormRows}">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ListViewItem}">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+
+                                                    <local:FormRow Key="{Binding Key}" isDirty="{Binding Path=DataContext.Dirty, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}}" Value="{Binding Value}"/>
+
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                
+
+                            </ListView>
+                            
                         </StackPanel>
-                        <!--#endregion-->
+
                         
-                        <!--#region TextBox-->
-                        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
-                        <!--#endregion-->
-                         
-                    </Grid>
 
-                    <ContentPresenter DockPanel.Dock="Top" Content="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                        
 
 
-                </DockPanel>
+                    </TabItem>
+                    
+                    
+                </TabControl>
+                    
+                   
+                        
+                        
+
+
 
             </Border>
             

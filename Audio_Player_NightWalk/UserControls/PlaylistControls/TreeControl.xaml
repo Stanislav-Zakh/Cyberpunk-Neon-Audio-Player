@@ -8,44 +8,75 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <Border Background="#8809143C" DataContext="{Binding PlayList}">
-        <Border.Resources>
-            <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MyScroll}">
-                
-                
-            </Style>
-        </Border.Resources>
-        
-        <TreeView  Background="Transparent" ItemsSource="{Binding testCollection}" Padding="0">
 
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseContainer}">
-                    <Setter Property="IsSelected" Value="{Binding Clicked, Mode=OneWayToSource}"/>
-                    <Setter Property="local:isDoubleClicked.Value" Value="{Binding DoubleClicked, Mode=TwoWay}"/>
-                    <Setter Property="Margin" Value="0 3 0 3"/>
-                    <Style.Triggers>
-                        <Trigger Property="local:isDoubleClicked.Value" Value="True">
-                            <Setter Property="Background" Value="#6FFFFF"/>
-                            <Setter Property="Opacity" Value="0.9"/>
-                            <Setter Property="local:SelectionColor.Value" Value="White"/>
-                        </Trigger>
-                    </Style.Triggers>
+
+    <DockPanel Background="White">
+        <Grid DockPanel.Dock="Top">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--#region  Buttons-->
+            <StackPanel Grid.Column="0" Orientation="Horizontal">
+                <Button Content="New Playlist" Style="{StaticResource ApplicationControlButton}" FontSize="10" Command="{Binding AddNewPlayList}"/>
+                <Button Content="Add File's" Style="{StaticResource ApplicationControlButton}" FontSize="10" Command="{Binding AddTracks}"/>
+                <Button Content="Sort" Style="{StaticResource ApplicationControlButton}" FontSize="10"/>
+            </StackPanel>
+            <!--#endregion-->
+
+            <!--#region TextBox-->
+            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Visibility="Collapsed"/>
+            <!--#endregion-->
+
+        </Grid>
+
+        <Border Background="#8809143C" BorderThickness="0" DataContext="{Binding PlayList}">
+            <Border.Resources>
+                <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MyScroll}">
+
+
                 </Style>
-            </TreeView.ItemContainerStyle>
+            </Border.Resources>
 
-            <TreeView.Resources>
-                <HierarchicalDataTemplate DataType="{x:Type local:PlayListViewModel}" ItemsSource="{Binding Tracks}">
-                    <local:PlayListControl/>
-                </HierarchicalDataTemplate>
+            <TreeView Background="Transparent" BorderThickness="0" ItemsSource="{Binding testCollection}" Padding="0">
 
-                <DataTemplate DataType="{x:Type local:TrackViewModel}">
-                    <local:TrackControl/>
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseContainer}">
+                        <Setter Property="IsSelected" Value="{Binding Clicked, Mode=OneWayToSource}"/>
+                        <Setter Property="local:isDoubleClicked.Value" Value="{Binding DoubleClicked, Mode=TwoWay}"/>
+                        <Setter Property="Margin" Value="0 3 0 3"/>
+                        <Style.Triggers>
+                            <Trigger Property="local:isDoubleClicked.Value" Value="True">
+                                <Setter Property="Background" Value="#6FFFFF"/>
+                                <Setter Property="Opacity" Value="0.9"/>
+                                <Setter Property="local:SelectionColor.Value" Value="White"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TreeView.ItemContainerStyle>
 
-                </DataTemplate>
-            </TreeView.Resources>
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type local:PlayListViewModel}" ItemsSource="{Binding Tracks}">
+                        <local:PlayListControl/>
+                    </HierarchicalDataTemplate>
+
+                    <DataTemplate DataType="{x:Type local:TrackViewModel}">
+                        <local:TrackControl/>
+
+                    </DataTemplate>
+                </TreeView.Resources>
 
 
 
-        </TreeView>
-    </Border>
+            </TreeView>
+        </Border>
+    </DockPanel>
+    
 </UserControl>

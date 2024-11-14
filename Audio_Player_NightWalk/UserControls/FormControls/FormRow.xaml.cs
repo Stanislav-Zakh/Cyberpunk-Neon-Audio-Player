@@ -49,9 +49,24 @@ namespace Audio_Player_NightWalk
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(string), typeof(FormRow), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        public bool isDirty
+        {
+            get { return (bool)GetValue(isDirtyProperty); }
+            set { SetValue(isDirtyProperty, value); }
+        }
 
 
+        public static readonly DependencyProperty isDirtyProperty =
+            DependencyProperty.Register("isDirty", typeof(bool), typeof(FormRow), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            
+        }
 
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            isDirty = true;
+        }
     }
 }

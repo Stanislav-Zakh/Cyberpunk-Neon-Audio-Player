@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace Audio_Player_NightWalk
 {
-    public class TagFormViewModel : BaseViewModel
+    public interface AudioTreeItem
     {
+       void UpdateData(FullAudiFileInfo info);
 
+
+        string GetFullPath();
 
 
     }

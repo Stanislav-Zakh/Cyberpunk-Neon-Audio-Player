@@ -3,6 +3,7 @@ using NAudio.WaveFormRenderer;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,9 @@ namespace Audio_Player_NightWalk
 
         private WaveOutEvent? outputDevice = null;
 
-        private AudioFileReader? audioFile = null;
+        private Mp3FileReader? audioFile = null;
+
+        private Stream? stream = null;
 
         private bool PAUSED = false;
 
@@ -58,9 +61,9 @@ namespace Audio_Player_NightWalk
             this.StopAudio();
 
             outputDevice = new WaveOutEvent();
-            audioFile = new AudioFileReader(filePath);
+            this.stream = FileManager.GetStream(filePath);
+            audioFile = new Mp3FileReader(stream);
             outputDevice.Init(audioFile);
-
 
             PAUSED = false;
             outputDevice.Play();
@@ -137,6 +140,9 @@ namespace Audio_Player_NightWalk
             this.outputDevice = null;
             this.audioFile.Dispose();
             this.audioFile = null;
+
+            stream.Dispose();
+            stream = null;
         }
 
 

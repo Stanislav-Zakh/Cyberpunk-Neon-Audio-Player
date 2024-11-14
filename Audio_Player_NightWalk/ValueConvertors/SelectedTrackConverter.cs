@@ -23,7 +23,7 @@ namespace Audio_Player_NightWalk
                 return $"{info.Title} by {info.Artist}";
             else
             {
-                return $"{info.Genre} | {info.Duration} | {info.Artist}";
+                return $"{info.Album} | {info.Genre} | {info.Year}";
             }
 
 

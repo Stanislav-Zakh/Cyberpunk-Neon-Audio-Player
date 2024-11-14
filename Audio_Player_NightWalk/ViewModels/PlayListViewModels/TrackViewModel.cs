@@ -9,7 +9,7 @@ using System.Xml.Linq;
 
 namespace Audio_Player_NightWalk
 {
-    public class TrackViewModel : BaseViewModel
+    public class TrackViewModel : BaseViewModel, AudioTreeItem
     {
 
         #region private fields
@@ -21,8 +21,27 @@ namespace Audio_Player_NightWalk
         #endregion
 
 
+        #region User click interaction
 
-        #region
+        private bool clicked;
+
+        /// <summary>
+        /// If user single-clicked on the track, get ad display information.
+        /// </summary>
+        public bool Clicked
+        {
+            get { return clicked; }
+            set
+            {
+
+                clicked = value;
+                if (clicked)
+                    readTagData(true);
+
+                PlayListManagerViewModel.Instance.SetFocusedTrack(this);
+
+            }
+        }
 
         private bool _doubleClicked = false;
 
@@ -50,23 +69,8 @@ namespace Audio_Player_NightWalk
 
         public TimeSpan TrackTime { get; set; }
 
-        private bool clicked;
 
-        /// <summary>
-        /// If user single-clicked on the track, get ad display information.
-        /// </summary>
-        public bool Clicked
-        {
-            get { return clicked; }
-            set {  
-                 
-               clicked = value;
-                if (clicked)
-                    readTagData(true);
-                           
-            }
-        }
-
+        #region Constructor
         public TrackViewModel(string name, PlayListViewModel parentRef)
         {
             this.Name = name;
@@ -76,15 +80,19 @@ namespace Audio_Player_NightWalk
             this.ParentPlayList = parentRef;
         }
 
+        #endregion
+
+
+        #region Working with Tags
         /// <summary>
         /// Reads tag Data from the file and (if passed in param is true) assigns data to the parent Playlist. 
         /// </summary>
         /// <param name="assignToParent"></param>
-        public void readTagData(bool assignToParent)
+        private void readTagData(bool assignToParent)
         {
             if (_firstTimeTags)
             {
-                this._audiFileInfo = TagReader.ReadTagsAndReturnInfo(this.GetFullPath());
+                this._audiFileInfo = TagReader.LoadTagInfo(this.GetFullPath());
                 _firstTimeTags = false;
             }
 
@@ -101,33 +109,56 @@ namespace Audio_Player_NightWalk
         {
             if (_firstTimeTags)
             {
-                this._audiFileInfo = TagReader.ReadTagsAndReturnInfo(this.GetFullPath());
+                this._audiFileInfo = TagReader.LoadTagInfo(this.GetFullPath());
                 _firstTimeTags = false;
             }
                 
                 
             return _audiFileInfo;
-        } 
+        }
 
-        public void assignTagDataToPlaylist()
+        #endregion
+
+
+        #region Utility
+
+        /// <summary>
+        /// Assign Tag data to the parent playlist
+        /// </summary>
+        private void assignTagDataToPlaylist()
         {
-
-
+           
             ParentPlayList.Title = this._audiFileInfo.Title;
-            ParentPlayList.Duration = this._audiFileInfo.Duration;
             ParentPlayList.Artist = this._audiFileInfo.Artist;
+            ParentPlayList.Duration = this._audiFileInfo.Duration;
+            ParentPlayList.Album = this._audiFileInfo.Album;
+            ParentPlayList.Year = this._audiFileInfo.Year;
             ParentPlayList.Genre = this._audiFileInfo.Genre;
+
             ParentPlayList.Cover = this._audiFileInfo.Cover;
+
         }
 
         public string GetFullPath()
         {
             return Path.Combine(ParentPlayList.Path, this.Name);
         }
-        
+
+        #endregion
 
 
+        /// <summary>
+        /// Update tag Data from the external command.
+        /// </summary>
+        /// <param name="info"></param>
+        public void UpdateData(FullAudiFileInfo info)
+        {
+            this._audiFileInfo.Artist = info.Artist;
+            this._audiFileInfo.Title = info.Title;
+            this._audiFileInfo.Genre = info.Genre;
 
+            assignTagDataToPlaylist();
+        }
 
     }
 }

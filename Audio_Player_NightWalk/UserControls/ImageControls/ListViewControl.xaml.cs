@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace Audio_Player_NightWalk
 {
     /// <summary>
-    /// Interaction logic for ImageViewer.xaml
+    /// Interaction logic for ListViewControl.xaml
     /// </summary>
-    public partial class ImageViewer : Page
+    public partial class ListViewControl : UserControl
     {
-        public ImageViewer()
+        public ListViewControl()
         {
             InitializeComponent();
-
-            this.DataContext = new ImageViewerViewModel();
         }
     }
 }

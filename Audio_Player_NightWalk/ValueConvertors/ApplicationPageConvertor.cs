@@ -19,17 +19,16 @@ namespace Audio_Player_NightWalk
 
             switch((CurrentPageType) value)
             {
-                case CurrentPageType.ImageViewer:
-                    return new ImageViewer();
+                case CurrentPageType.Album:
+                    return new AlbumPage();
 
-                case CurrentPageType.LocalMedia:
+                case CurrentPageType.ImageLibrary:
+                    return new ImageLibrary();
+
+                case CurrentPageType.Visualizer:
                     return new LocalMediaPage();
 
-                case CurrentPageType.Details:
-                    return new TagFormPage();
-
-
-
+                
 
                 default:
                     Debugger.Break(); // <- Stop Debugger

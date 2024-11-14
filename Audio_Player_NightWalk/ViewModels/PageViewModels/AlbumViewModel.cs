@@ -8,11 +8,11 @@ using System.Windows.Media;
 
 namespace Audio_Player_NightWalk
 {
-    public class ImageViewerViewModel : BaseViewModel
+    public class AlbumViewModel : BaseViewModel
     {
 
 
-        public ImageViewerViewModel()
+        public AlbumViewModel()
         {
             PlayerStateViewModel.Instance.PropertyChanged += CoverChanged;
 

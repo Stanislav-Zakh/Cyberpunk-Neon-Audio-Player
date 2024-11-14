@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ using System.Windows.Media;
 
 namespace Audio_Player_NightWalk
 {
-    public class PlayListViewModel : BaseViewModel
+    public class PlayListViewModel : BaseViewModel, AudioTreeItem
     {
 
-        #region Current Track Display
+        #region Public Properties to display info
 
         private string _title = "Not Selected";
 
@@ -50,7 +51,31 @@ namespace Audio_Player_NightWalk
             }
         }
 
-        private string _genre = "Not Selected";
+        private string _album = string.Empty;
+
+        public string Album
+        {
+            get { return _album; }
+            set
+            {
+                _album = value;
+                OnPropertyChanged(nameof(Album));
+            }
+        }
+
+        private string _year = string.Empty;
+
+        public string Year
+        {
+            get { return _year; }
+            set
+            {
+                _year = value;
+                OnPropertyChanged(nameof(Year));
+            }
+        }
+
+        private string _genre = string.Empty;
 
         public string Genre
         {
@@ -61,7 +86,6 @@ namespace Audio_Player_NightWalk
                 OnPropertyChanged(nameof(Genre));
             }
         }
-
 
         private ImageSource _cover = null;
 
@@ -78,22 +102,25 @@ namespace Audio_Player_NightWalk
         #endregion
 
 
-        #region
+        #region User click interaction
 
-        private TrackViewModel _selectedTrack;
+        private bool clicked;
 
-        public TrackViewModel SelectedTrack
+        public bool Clicked
         {
-            get { return _selectedTrack; }
-            set 
-            {          
-                _selectedTrack = value;
-                PlayerStateViewModel.Instance.SelectTrack(_selectedTrack);
+            get { return clicked; }
+            set
+            {
+
+
+                clicked = value;
+                if (clicked)
+                    // call tag reader to extract info
+                    // call ios to update dassboard viewmodel view
+                    Trace.WriteLine($"{Name}: I am Clicked");
             }
         }
 
-
-        
 
         private bool _doubleClicked = false;
 
@@ -120,33 +147,43 @@ namespace Audio_Player_NightWalk
 
         #endregion
 
+        /// <summary>
+        /// Path to the folder on the disk
+        /// </summary>
         public string Path { get; set; } = string.Empty;
 
+        /// <summary>
+        /// Name of the Playlist
+        /// </summary>
         public string Name { get; set; }
 
+
+        /// <summary>
+        /// Total Time of all Tracks in the Playlist
+        /// </summary>
         public TimeSpan PlaylistTotalTime { get; set; }
+
+        #region Contained Track's references
 
         public ObservableCollectionRange<TrackViewModel> Tracks { get; set; }
 
+        private TrackViewModel _selectedTrack;
 
-        private bool clicked;
-
-        public bool Clicked
+        public TrackViewModel SelectedTrack
         {
-            get { return clicked; }
+            get { return _selectedTrack; }
             set
             {
+                _selectedTrack = value;
+                PlayerStateViewModel.Instance.SelectTrack(_selectedTrack);
                 
-                
-                clicked = value;
-                if (clicked)
-                    // call tag reader to extract info
-                    // call ios to update dassboard viewmodel view
-                   Trace.WriteLine($"{Name}: I am Clicked");
             }
         }
 
+        #endregion
 
+
+        #region Constructor
         public PlayListViewModel(string path,  string name)
         {
             this.Path = path;  
@@ -157,13 +194,10 @@ namespace Audio_Player_NightWalk
 
             Tracks = FileManager.GetTracks(Path, this);          
         }
+        #endregion
 
 
-
-        public void AddTracks(List<TrackViewModel> newTracks)
-        {
-            Tracks.AddRange(newTracks);
-        }
+        #region Selecting Tracks
 
         public void setSelectedTrack(TrackViewModel track)
         {
@@ -173,10 +207,6 @@ namespace Audio_Player_NightWalk
             this.SelectedTrack = track;
         }
 
-        private int findTrackIndex()
-        {
-            return 0;
-        }
 
         public void GetNextTrack()
         {
@@ -213,8 +243,33 @@ namespace Audio_Player_NightWalk
             {
                 Tracks[ind - 1].DoubleClicked = true; // TODO hardCoded remove later
             }
+        }
+
+        #endregion
+
+
+        public void AddTracks(List<TrackViewModel> newTracks)
+        {
+            Tracks.AddRange(newTracks);
+        }
+
+
+        /// <summary>
+        /// Update itself and contained tracks
+        /// </summary>
+        /// <param name="info"></param>
+        public void UpdateData(FullAudiFileInfo info)
+        {
 
         }
+
+        public string GetFullPath()
+        {
+            return this.Path;
+        }
+
+
+        
 
 
 

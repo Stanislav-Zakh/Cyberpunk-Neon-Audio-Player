@@ -62,13 +62,24 @@
                                             
                                         </Button>
 
+
+                                        <StackPanel Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal" DataContext="{x:Static local:ApplicationViewModel.Instance}">
+
+                                            <Button  Style="{StaticResource ApplicationControlButton}" Content="Album" Command="{Binding DisplayAlbum}"/>
+                                            <Button  Style="{StaticResource ApplicationControlButton}" Content="Gallery" Command="{Binding DisplayImages}"/>
+                                            <Button  Style="{StaticResource ApplicationControlButton}" Content="Visualizer 3D"/>
+
+                                        </StackPanel>
+                                        
                                         <!-- Application Header Name -->
+                                        <!--
                                         <Viewbox Grid.Column="0" Grid.ColumnSpan="3">
                                             <TextBlock Text="{Binding PlayerTitle}" FontSize="10" Style="{StaticResource DataTextPixel}">
                                                 
                                             </TextBlock>
                                         </Viewbox>
-
+                                         -->
+                                        
                                         <!-- Window State Controls -->
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
 
@@ -157,23 +168,6 @@
 
 
             <DockPanel Grid.Column="1" DataContext="{x:Static local:ApplicationViewModel.Instance}">
-                <Grid  DockPanel.Dock="Top" Height="30" Background="Black">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <Button Grid.Column="0" Style="{StaticResource ApplicationControlButton}" Content="Album" Command="{Binding DisplayAlbum}"/>
-                    <Button Grid.Column="2" Style="{StaticResource ApplicationControlButton}" Content="Details" Command="{Binding DisplayDetails}"/>
-                    <Button Grid.Column="4" Style="{StaticResource ApplicationControlButton}" Content="Image Library" Command="{Binding DisplayImages}"/>
-                    <Button Grid.Column="6" Style="{StaticResource ApplicationControlButton}" Content="Visualizer 3D"/>
-
-                </Grid>
                 <Frame NavigationUIVisibility="Hidden" DockPanel.Dock="Bottom"  Content="{Binding SelectedPage, Converter={local:ApplicationPageConvertor}}"/>
             </DockPanel>
 

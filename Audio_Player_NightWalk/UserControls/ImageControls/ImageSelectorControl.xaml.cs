@@ -16,15 +16,13 @@ using System.Windows.Shapes;
 namespace Audio_Player_NightWalk
 {
     /// <summary>
-    /// Interaction logic for TagFormPage.xaml
+    /// Interaction logic for ImageSelectorControl.xaml
     /// </summary>
-    public partial class TagFormPage : Page
+    public partial class ImageSelectorControl : UserControl
     {
-        public TagFormPage()
+        public ImageSelectorControl()
         {
             InitializeComponent();
-
-            this.DataContext =  new TagFormViewModel();
         }
     }
 }
