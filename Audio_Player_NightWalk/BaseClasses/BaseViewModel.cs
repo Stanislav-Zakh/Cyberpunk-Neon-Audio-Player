@@ -16,8 +16,6 @@ namespace Audio_Player_NightWalk
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
-
-
-
     }
+
 }

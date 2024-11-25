@@ -9,7 +9,9 @@ namespace Audio_Player_NightWalk
 {
    
     
-
+    /// <summary>
+    ///   
+    /// </summary>
 
     public class SelectionColor : BaseAttachedProperty<SelectionColor, SolidColorBrush> { }
 

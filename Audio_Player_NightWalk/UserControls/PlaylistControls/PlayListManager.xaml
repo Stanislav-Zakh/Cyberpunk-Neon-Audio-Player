@@ -11,7 +11,7 @@
 
         <ControlTemplate>
 
-            <Border Background="{StaticResource StormyNightBrush}" BorderThickness="0">
+            <Border  BorderThickness="0">
 
                 <TabControl Style="{DynamicResource TabControlSmall}"  SelectedIndex="{Binding Index, Mode=OneWayToSource}" TabStripPlacement="Bottom">
 
@@ -21,44 +21,51 @@
                             <ContentPresenter DockPanel.Dock="Top" Content="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                     </TabItem>
 
-                    <TabItem FontFamily="{StaticResource FontAwesome}" Style="{StaticResource TabItemSmall}" Header="&#xe522;" FontSize="12">
+                    <TabItem  FontFamily="{StaticResource FontAwesome}" Style="{StaticResource TabItemSmall}" Header="&#xe522;" FontSize="12">
 
-                        <StackPanel DataContext="{Binding Form}">
-                            <!--#region Header -->
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="100"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <TextBlock Grid.Column="0" Text="Name"/>
-                                <TextBlock Grid.Column="1" Text="Value"/>
-                            </Grid>
-                            <!--#endregion-->
-
-                            <ListView ItemsSource="{Binding FormRows}">
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="{x:Type ListViewItem}">
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate>
-
-                                                    <local:FormRow Key="{Binding Key}" isDirty="{Binding Path=DataContext.Dirty, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}}" Value="{Binding Value}"/>
-
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </ListView.ItemContainerStyle>
-                                
-
-                            </ListView>
+                        <Border Padding="10" Background="{StaticResource BackStreetCommonBrush}">
                             
-                        </StackPanel>
-
                         
+                            <DockPanel DataContext="{Binding Form}">
+                                <DockPanel.Background>
+                                    <ImageBrush ImageSource="\PublicResources\Images\abstract-paint.png"/>
+                                </DockPanel.Background>
+                                <!--#region Header -->
+                                <Grid DockPanel.Dock="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="100"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                        
+                                    <TextBlock FontFamily="{StaticResource Don}" FontSize="16" Foreground="{StaticResource DarkNeonYellowBrush}" Grid.Column="0" Text="Name"/>
+                                    <TextBlock FontFamily="{StaticResource Don}" FontSize="16" Foreground="{StaticResource DarkNeonYellowBrush}" Grid.Column="1" Text="Value"/>
+                                </Grid>
+                                <!--#endregion-->
+
+                                <ListView DockPanel.Dock="Top" ItemsSource="{Binding FormRows}" Background="Transparent" BorderBrush="Transparent">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="{x:Type ListViewItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+
+                                                        <local:FormRow Margin="0 5 0 5" Key="{Binding Key}" isDirty="{Binding Path=DataContext.Dirty, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DockPanel}}}" Value="{Binding Value}"/>
+
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+
+                                </ListView>
+                            
+                            </DockPanel>
+
+                        </Border>
+
+
+
+
 
 
                     </TabItem>

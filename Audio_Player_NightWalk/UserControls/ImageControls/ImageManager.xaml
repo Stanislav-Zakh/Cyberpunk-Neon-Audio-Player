@@ -10,7 +10,7 @@
 
         <ControlTemplate>
 
-            <Border Margin="0 15 0 15" Padding="5" CornerRadius="10" Background="Beige" Grid.Column="0">
+            <Border Margin="0 15 0 15" Padding="5" CornerRadius="10" BorderThickness="1" BorderBrush="{StaticResource DarkNeonYellowBrush}" Background="{StaticResource BackStreetCommonBrush}" Grid.Column="0">
                 <DockPanel>
                     
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">

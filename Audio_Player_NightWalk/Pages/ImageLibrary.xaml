@@ -9,9 +9,9 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ImageLibrary">
 
-    <Grid DataContext="{x:Static local:ImageLibraryViewModel.Instance}" Background="Silver">
+    <Grid DataContext="{x:Static local:ImageLibraryViewModel.Instance}" Background="{StaticResource CosmosBrush}">
 
-        <Border Grid.Row="1" Background="{StaticResource StormyNightBrush}" BorderThickness="0 0 0 0" BorderBrush="{StaticResource StealGradient}">
+        <Border Grid.Row="1"  BorderThickness="2 0 0 0" BorderBrush="{StaticResource LightNeonBlueBrush}">
 
             <!--
             <Border.Background>
@@ -23,7 +23,6 @@
                 </VisualBrush>
             </Border.Background>
             -->
-
 
             <Viewbox Stretch="Uniform">
                 <Border BorderThickness="5" BorderBrush="#88333333" >

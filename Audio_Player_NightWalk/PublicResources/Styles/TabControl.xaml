@@ -126,8 +126,9 @@
     <!--#region Header-->
     <Style x:Key="TabItemSmall" TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        <Setter Property="Foreground" Value="#DCD866"/>
-        <Setter Property="Background" Value="#22162B"/>
+        <Setter Property="Foreground" Value="{StaticResource LightNeonBlueBrush}"/>
+        <Setter Property="Background" Value="{StaticResource CosmosSolidBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LightNeonBlueBrush}"/>
         <Setter Property="BorderThickness" Value="0.5"/>
         <Setter Property="Width" Value="25"/>
         <Setter Property="Height" Value="{Binding ActualWidth, RelativeSource={RelativeSource Mode=Self}}"/>
@@ -142,7 +143,7 @@
                     <Grid x:Name="templateRoot" SnapsToDevicePixels="true">
                         
 
-                        <Border CornerRadius="30" x:Name="mainBorder" Opacity="1" BorderBrush="#DCD866" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0 0 0 0">
+                        <Border CornerRadius="30" x:Name="mainBorder" Opacity="1" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0 0 0 0">
                             <Border.Effect>
                                 <DropShadowEffect ShadowDepth="1"/>
                             </Border.Effect>
@@ -155,6 +156,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource LightNeonYellowBrush}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource LightNeonYellowBrush}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     
     <!--#endregion-->

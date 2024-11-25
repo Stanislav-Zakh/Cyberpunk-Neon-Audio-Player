@@ -14,70 +14,60 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Audio_Player_NightWalk.UserControls.PlayerControls
+namespace Audio_Player_NightWalk
 {
     /// <summary>
     /// Interaction logic for VolumeControl.xaml
     /// </summary>
-    public partial class VolumeControl : UserControl
+    public partial class VolumeControl : UserControl, INotifyPropertyChanged
     {
+
+        public  event PropertyChangedEventHandler? PropertyChanged;
+        public void OnPropertyChanged(string Propertyname)
+        {
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Propertyname));
+
+        }
+
         public VolumeControl()
         {
             InitializeComponent();
         }
 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        public void OnPropertyChanged(string PropertyName)
+        public float TrackProgress
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+            get { return (float)GetValue(TrackProgressProperty); }
+            set { SetValue(TrackProgressProperty, value); }
         }
 
-        protected override void OnDragEnter(DragEventArgs e)
+
+        public static readonly DependencyProperty TrackProgressProperty =
+            DependencyProperty.Register("TrackProgress", typeof(float), typeof(VolumeControl), new FrameworkPropertyMetadata(0.5f, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ProgressChanged));
+
+
+        public static void ProgressChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            base.OnDragEnter(e);
+            ((VolumeControl) d).DisplayValue = float.Round(((float) e.NewValue) * 100, 2);
+        } 
 
 
+        private float _displayValue = 0.0f;
 
-        }
-
-        private double _angle = 0;
-
-        public double Angle
+        public float DisplayValue
         {
+            get { return _displayValue; }
+            set { 
+                _displayValue = value;
 
-            get
-            {
-                return _angle;
+                OnPropertyChanged(nameof(DisplayValue));
             }
-
-            set
-            {
-                _angle = value;
-                OnPropertyChanged(nameof(Angle));
-
-                UpdateBorderGradient(_angle);
-            }
-
-
         }
 
-        private void UpdateBorderGradient(double angle)
-        {
-
-        }
-
-        public double HandleAngle
-        {
-            get { return (double)GetValue(HandleAngleProperty); }
-            set { Angle = value; }
-        }
-
-        // Using a DependencyProperty as the backing store for Angle.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty HandleAngleProperty =
-            DependencyProperty.Register("HandleAngle", typeof(double), typeof(PlayListManager), new PropertyMetadata(0));
 
 
+
+        
     }
 }

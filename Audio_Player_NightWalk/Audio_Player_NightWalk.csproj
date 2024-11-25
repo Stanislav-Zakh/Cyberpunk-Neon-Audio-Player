@@ -11,10 +11,10 @@
   <ItemGroup>
     <None Remove="PublicResources\Fonts\DonGraffiti.otf" />
     <None Remove="PublicResources\Fonts\Font Awesome.otf" />
-    <None Remove="PublicResources\Fonts\MAELS___.TTF" />
     <None Remove="PublicResources\Fonts\PIXY.otf" />
     <None Remove="PublicResources\Fonts\terminal-grotesque_open.otf" />
-    <None Remove="PublicResources\Images\rainy-background.jpg" />
+    <None Remove="PublicResources\Images\abstract-paint.png" />
+    <None Remove="PublicResources\Images\color-neon-back.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,10 +28,10 @@
   <ItemGroup>
     <Resource Include="PublicResources\Fonts\DonGraffiti.otf" />
     <Resource Include="PublicResources\Fonts\Font Awesome.otf" />
-    <Resource Include="PublicResources\Fonts\MAELS___.TTF" />
     <Resource Include="PublicResources\Fonts\PIXY.otf" />
     <Resource Include="PublicResources\Fonts\terminal-grotesque_open.otf" />
-    <Resource Include="PublicResources\Images\rainy-background.jpg" />
+    <Resource Include="PublicResources\Images\abstract-paint.png" />
+    <Resource Include="PublicResources\Images\color-neon-back.png" />
   </ItemGroup>
 
 </Project>

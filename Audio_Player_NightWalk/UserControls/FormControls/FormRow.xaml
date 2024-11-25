@@ -13,8 +13,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Foreground="#333333" Text="{Binding Key, ElementName=Row}" Grid.Column="0"/>
-        <TextBox Foreground="#333333"  PreviewKeyDown="TextBox_PreviewKeyDown"  Text="{Binding Value, ElementName=Row, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
+        <TextBlock Foreground="{StaticResource LightNeonBlueBrush}" FontFamily="{StaticResource Pixy}" FontSize="14" Text="{Binding Key, ElementName=Row}" Grid.Column="0"/>
+
+        <TextBox Style="{DynamicResource FormTextBox}" FontFamily="{StaticResource Pixy}"  PreviewKeyDown="TextBox_PreviewKeyDown"  Text="{Binding Value, ElementName=Row, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1"/>
 
     </Grid>
 </UserControl>

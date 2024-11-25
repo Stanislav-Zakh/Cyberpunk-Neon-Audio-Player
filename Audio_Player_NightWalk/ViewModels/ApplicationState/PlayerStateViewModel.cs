@@ -13,9 +13,8 @@ namespace Audio_Player_NightWalk
     /// This is temporary solution. 
     /// We will change static Instance to the proper apllication ViewModel with Ninjection.  
     /// </summary>
-    public class PlayerStateViewModel : BaseViewModel
+    public class PlayerStateViewModel : SingeltonViewModel<PlayerStateViewModel>
     {
-
 
         private AudioPlayer _player;
 
@@ -25,10 +24,8 @@ namespace Audio_Player_NightWalk
 
         public Trackends TrackNaturalEnd = Trackends.NEXT;
 
-        public static PlayerStateViewModel Instance { get; private set; } = new PlayerStateViewModel();
-
-
         public PlayListViewModel? SelectedPlayList { get; set; } = null;
+
 
         #region Full Properties
 
@@ -90,8 +87,46 @@ namespace Audio_Player_NightWalk
             }
         }
 
-        #endregion
 
+        private bool _isMuted = false;
+
+        public bool IsMuted
+        {
+            get { return _isMuted; }
+            set { 
+                _isMuted = value;
+                OnPropertyChanged(nameof(IsMuted));
+
+                if (_isMuted)
+                {
+                    this._player.Mute();
+                } else {
+                    this._player.AdjustVolume(_playerVolume);
+                }
+            }
+        }
+
+
+        private float _playerVolume = 1.0f;
+
+        public float PlayerVolume
+        {
+            get { return _playerVolume; }
+            set { 
+                
+                _playerVolume = value;
+                OnPropertyChanged(nameof(PlayerVolume));
+
+                if(IsMuted)
+                    return;
+
+                this._player.AdjustVolume(value);
+            }
+        }
+
+
+
+        #endregion
 
         #region Commands
 
@@ -103,7 +138,11 @@ namespace Audio_Player_NightWalk
 
         public ICommand Repeat { get; set; }
 
+        public ICommand Mute { get; set; }
+
         #endregion
+
+        #region Constructor
 
         private PlayerStateViewModel()
         {
@@ -114,6 +153,8 @@ namespace Audio_Player_NightWalk
             );
             
             Repeat = new RelayCommand(() => this._player.RepeatAudio());
+
+            Mute = new RelayCommand(() => this.IsMuted ^= true);
 
             PlayNextTrack =  new RelayCommand(() => this.SelectedPlayList?.GetNextTrack());
 
@@ -134,6 +175,8 @@ namespace Audio_Player_NightWalk
             timer.Start();
         }
 
+        #endregion
+
         public void setDragged()
         {
             this.isDragged = true;
@@ -151,8 +194,6 @@ namespace Audio_Player_NightWalk
         {
             if (SelectedTrack == null)
                 return;
-
-
         }
 
 
@@ -165,6 +206,9 @@ namespace Audio_Player_NightWalk
 
         public void SelectPlaylist(PlayListViewModel playlist)
         {
+           // if (this.SelectedPlayList != null && this.SelectedPlayList != playlist)
+             //   this.SelectedPlayList.DoubleClicked = false;
+
             this.SelectedPlayList = playlist;
         }
 

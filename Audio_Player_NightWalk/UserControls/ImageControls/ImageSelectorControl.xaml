@@ -14,17 +14,19 @@
         </Grid.ColumnDefinitions>
 
        
-        <Border Grid.Column="0" BorderThickness="2" Background="#333333" Width="60" Height="60" Margin="0 0 10 0">
+        <Border Grid.Column="0" BorderThickness="1 1 1 1" BorderBrush="{StaticResource NeonFlowVert}" Background="{StaticResource CosmosBrush}" Width="60" Height="60" Margin="0 0 10 0">
+            
             <Viewbox>
                 <Image Source="{Binding Art}" />
             </Viewbox>
         </Border>
 
-        <Border Grid.Column="1" Padding="5">
+        <Border  Grid.Column="1" Padding="5">
 
             <StackPanel  VerticalAlignment="Center">
-
-                <TextBlock Text="{Binding Name, FallbackValue=Stanislav Zakh}" Foreground="LightBlue" FontSize="20"/>
+                <Border BorderThickness="0 0 0 1" BorderBrush="{StaticResource NeonFlowHori}">
+                    <TextBlock Text="{Binding Name, FallbackValue=Art Name}" Foreground="{StaticResource LightNeonBlueBrush}" FontSize="20"/>
+                </Border>
 
             </StackPanel>
             

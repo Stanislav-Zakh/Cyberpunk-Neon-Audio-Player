@@ -27,15 +27,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="Transparent" Height="20" Padding="2,2,2,2" Width="20">
-                        <TextBlock x:Name="ExpandPath" FontFamily="{StaticResource FontAwesome}" Text="&#xf5fd;"/>
+                        <TextBlock x:Name="ExpandPath" Foreground="{StaticResource LightNeonBlueBrush}" FontFamily="{StaticResource FontAwesome}" Text="&#xf001;"/>
+
+
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                 
-                            <Setter Property="Foreground" TargetName="ExpandPath" Value="Silver"/>
+
+                            <Setter Property="Foreground" TargetName="ExpandPath" Value="{StaticResource DarkNeonYellowBrush}"/>
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" TargetName="ExpandPath" Value="Gold"/>
+                            <Setter Property="Foreground" TargetName="ExpandPath" Value="{StaticResource LightNeonYellowBrush}"/>
                         
                         </Trigger>
                         <MultiTrigger>
@@ -43,7 +45,7 @@
                                 <Condition Property="IsMouseOver" Value="True"/>
                                 <Condition Property="IsChecked" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter Property="Foreground" TargetName="ExpandPath" Value="Gold"/>
+                            <Setter Property="Foreground" TargetName="ExpandPath" Value="{StaticResource LightNeonYellowBrush}"/>
                             
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
@@ -68,9 +70,10 @@
         <Setter Property="local:MonitorDoubleClick.Value" Value="True"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="local:SelectionColor.Value" Value="Transparent"/>
-        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Padding" Value="8,0,0,0"/>
+        <Setter Property="Padding" Value="8,0,5,0"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
         <Setter Property="Template">
@@ -87,8 +90,12 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
 
-                        <Border Grid.Column="0" Width="8" Background="{TemplateBinding local:SelectionColor.Value}" />
-                        <Border  Grid.Column="1" Grid.Row="0" Background="{TemplateBinding Background}" x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                        <Border Grid.Column="0" Width="8" Background="{TemplateBinding local:SelectionColor.Value}">
+                            <Border.Effect>
+                                <DropShadowEffect ShadowDepth="2" Color="LightBlue"/>
+                            </Border.Effect>
+                        </Border>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}"  Grid.Column="1" Grid.Row="0" Background="{TemplateBinding Background}" x:Name="Bd"  BorderThickness="1" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
                             <ContentPresenter x:Name="PART_Header" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </Border>
                         <ToggleButton Grid.Column="1" Grid.Row="1" Background="{TemplateBinding Background}" x:Name="Expander" ClickMode="Press" IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource Mode=TemplatedParent}}" Style="{StaticResource ExpandCollapseToggleStyle}"/>
@@ -102,10 +109,10 @@
                             <Setter Property="Visibility" TargetName="Expander" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="true">
-                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                            <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource LightNeonBlueBrush}"/>
                         </Trigger>
                         <MultiTrigger>
+                            <!-- When selected but out of focus-->
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="true"/>
                                 <Condition Property="IsSelectionActive" Value="false"/>

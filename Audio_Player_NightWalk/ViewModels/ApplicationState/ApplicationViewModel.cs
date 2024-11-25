@@ -1,15 +1,12 @@
 ﻿using Audio_Player_NightWalk.BaseClasses;
-using Audio_Player_NightWalk.DataModel.Enums;
 using System.Windows;
 using System.Windows.Input;
 
 
 namespace Audio_Player_NightWalk
 {
-    public class ApplicationViewModel : BaseViewModel
+    public class ApplicationViewModel : SingeltonViewModel<ApplicationViewModel>
     {
-
-        public static ApplicationViewModel Instance { get; private set; } = new ApplicationViewModel();
 
         private CurrentPageType _selectedPage = CurrentPageType.Album;
 

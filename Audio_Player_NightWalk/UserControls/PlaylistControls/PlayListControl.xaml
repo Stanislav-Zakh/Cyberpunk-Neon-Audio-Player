@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:Audio_Player_NightWalk"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Grid Width="300" Background="Transparent" Margin="0 5 0 5">
+
+    <Grid  Margin="0 5 0 5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
 
         </Grid.ColumnDefinitions>
 
-        <Border Grid.Column="0" Background="#333333" Width="60" Height="60" Margin="0 0 10 0">
+        <Border Grid.Column="0" BorderBrush="{StaticResource NeonFlowVert}" BorderThickness="1"  Background="{StaticResource CosmosBrush}" Width="60" Height="60" Margin="0 0 10 0">
             <Viewbox>
                 <Image  Source="{Binding Cover}"/>
             </Viewbox>
@@ -33,10 +33,10 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Margin="0 0 0 5" Grid.Column="0" HorizontalAlignment="Left" FontFamily="{StaticResource Grotesque}" Text="{Binding Name}" FontSize="16"/>
-                <TextBlock Margin="0 0 0 5" Grid.Column="2"  HorizontalAlignment="Right" FontFamily="{StaticResource Grotesque}" Text="50:00" FontSize="16"/>
+                <TextBlock  Margin="0 0 0 5" Grid.Column="0" HorizontalAlignment="Left" Foreground="LightBlue" FontFamily="{StaticResource Grotesque}" Text="{Binding Name}" FontSize="16"/>
+                <TextBlock Margin="0 0 0 5" Grid.Column="2"  HorizontalAlignment="Right" Foreground="LightBlue" FontFamily="{StaticResource Grotesque}" Text="{Binding PlaylistTotalTime}" FontSize="12"/>
 
-                <TextBlock  Margin="0 0 0 8" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" FontFamily="Arial"  FontSize="12">
+                <TextBlock Foreground="LightBlue"    Margin="0 0 0 8" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" FontFamily="{StaticResource Pixy}"  FontSize="10">
                     <TextBlock.Text>
                         <MultiBinding StringFormat="{}{0} by {1}">
                             <Binding Path="Title"/>
@@ -44,12 +44,12 @@
                         </MultiBinding>
                     </TextBlock.Text>
                 </TextBlock>
-                <TextBlock Margin="0 0 0 8" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" FontFamily="Arial"  FontSize="12"  Text="{Binding Duration}"/>
+                <TextBlock Foreground="LightBlue" Margin="0 0 0 8" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" FontFamily="{StaticResource Pixy}"  FontSize="10"  Text="{Binding Duration}"/>
                 
             </Grid>
 
 
-            <TextBlock>
+            <TextBlock Foreground="LightBlue" FontFamily="{StaticResource Don}">
                 <TextBlock.Text>
                     <MultiBinding StringFormat="{}{0} | {1} | {2}">
                         <Binding Path="Album"/>

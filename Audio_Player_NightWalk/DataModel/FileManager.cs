@@ -83,7 +83,6 @@ namespace Audio_Player_NightWalk
 
             var collection = new ObservableCollection<PlayListViewModel>();
 
-
             try
             {
                 foreach (string path in Directory.GetDirectories(_PLAYLIST_FOLDER))
@@ -98,7 +97,7 @@ namespace Audio_Player_NightWalk
                 Debugger.Break();
 
             }
-       
+
              return collection;
         }
 
@@ -113,7 +112,7 @@ namespace Audio_Player_NightWalk
             {
                 foreach (string path in Directory.GetFiles(filepath))
                 {
-                    collection.Add(new TrackViewModel(path.Substring(path.LastIndexOf(Path.DirectorySeparatorChar) + 1), parent));
+                    collection.Add(new TrackViewModel(ReadTrackName(path), parent));
                 }
             }
             catch (IOException e)
@@ -255,43 +254,7 @@ namespace Audio_Player_NightWalk
             arts.AddRange(artworks);
         }
 
-        /*
-        public static void OpenFileDialogAddTracks(PlayListViewModel PlayList)
-        {
-           OpenFileDialog openFileDialog = new OpenFileDialog();
-
-            openFileDialog.InitialDirectory = $"D:{Path.DirectorySeparatorChar}Down{Path.DirectorySeparatorChar}"; 
-            openFileDialog.Multiselect = true;
-            openFileDialog.Filter = "Audio files (*.mp3)|*.mp3|All files (*.*)|*.*"; 
-
-            if (!openFileDialog.ShowDialog() ?? true)
-                 return;
-
-            string[] filePaths = openFileDialog.FileNames;
-
-            if (filePaths.Length < 1)
-                return;
-
-            // move filepaths
-            List<TrackViewModel> tracks = new List<TrackViewModel>();   
-
-            foreach (string path in filePaths)
-            {
-                var name = path.Substring(path.LastIndexOf(Path.DirectorySeparatorChar) + 1);
-
-               
-                MoveTrack(path, PlayList.Path, name);
-               
-                
-                tracks.Add(new TrackViewModel(name, PlayList)); 
-            }
-
-            PlayList.AddTracks(tracks);    
-        }
-
-        */
-
-
+       
         private static string MoveTrack(string OldPath, string NewPath, string name)
         {
             var count = 2;
@@ -334,11 +297,16 @@ namespace Audio_Player_NightWalk
             bitmap.DecodePixelHeight = decodedHeight;
 
             return bitmap;
-        } 
+        }
 
 
 
         #endregion
+
+        private static string ReadTrackName(string path)
+        {
+            return path.Substring(path.LastIndexOf(Path.DirectorySeparatorChar) + 1);
+        }
 
 
     }

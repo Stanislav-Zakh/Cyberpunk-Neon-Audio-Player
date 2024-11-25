@@ -58,9 +58,6 @@ namespace Audio_Player_NightWalk
                 OnPropertyChanged(nameof(FormRows));       
             }
         }
-
-
-
         #endregion
 
 

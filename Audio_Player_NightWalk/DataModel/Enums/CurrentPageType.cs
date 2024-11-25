@@ -1,6 +1,5 @@
 ﻿
-
-namespace Audio_Player_NightWalk.DataModel.Enums
+namespace Audio_Player_NightWalk
 {
     public enum CurrentPageType
     {
@@ -8,8 +7,5 @@ namespace Audio_Player_NightWalk.DataModel.Enums
         ImageLibrary = 1,
         Visualizer = 2,
         
-
-
-
     }
 }

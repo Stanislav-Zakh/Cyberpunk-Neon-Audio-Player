@@ -13,12 +13,6 @@ namespace Audio_Player_NightWalk
     public class AudioPlayer
     {
 
-        private WaveFormRenderer renderer = null;
-
-        private PeakProvider peakProvider = null;
-
-        private WaveFormRendererSettings renderSetting = null; 
-
         private WaveOutEvent? outputDevice = null;
 
         private Mp3FileReader? audioFile = null;
@@ -28,30 +22,7 @@ namespace Audio_Player_NightWalk
         private bool PAUSED = false;
 
 
-
-        private void CreateRenderer()
-        {
-
-            this.peakProvider = new MaxPeakProvider();
-
-            this.renderSetting = new StandardWaveFormRendererSettings();
-
-            renderSetting.Width = 800;
-            renderSetting.TopHeight = 10;
-            renderSetting.BottomHeight = 10;
-
-
-
-            this.renderer = new WaveFormRenderer();
-        }
-
-
-        public void getRenderSnapShot()
-        {
-            //return this.renderer.Render()
-        }
-
-      
+     
         /// <summary>
         /// Dispose of the previous track (if exist) and start playing a new track
         /// </summary>
@@ -186,12 +157,63 @@ namespace Audio_Player_NightWalk
         /// <param name="value"></param>
         public void AdjustVolume(float value)
         {
-            
 
+            if (outputDevice == null)
+                return;
+
+            if (value > 1.0f || value < 0.0f)
+                value = Math.Abs(value % 1.0f);
+
+            outputDevice.Volume = value;
+        }
+
+        public void Mute()
+        {
+            if (outputDevice == null)
+                return;
+
+            outputDevice.Volume = 0;
+        }
+
+        public float GetVolume()
+        {
+            if (outputDevice == null)
+                return 0;
+
+
+            return outputDevice.Volume;
         }
 
 
-        
+        #region Renderer
+
+        private WaveFormRenderer? renderer = null;
+
+        private PeakProvider? peakProvider = null;
+
+        private WaveFormRendererSettings? renderSetting = null;
+        private void CreateRenderer()
+        {
+
+            this.peakProvider = new MaxPeakProvider();
+
+            this.renderSetting = new StandardWaveFormRendererSettings();
+
+            renderSetting.Width = 800;
+            renderSetting.TopHeight = 10;
+            renderSetting.BottomHeight = 10;
+
+
+
+            this.renderer = new WaveFormRenderer();
+        }
+
+        public void getRenderSnapShot()
+        {
+            //return this.renderer.Render()
+        }
+
+        #endregion
 
 
 

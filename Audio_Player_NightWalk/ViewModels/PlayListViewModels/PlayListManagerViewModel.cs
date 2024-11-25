@@ -8,13 +8,10 @@ using System.Windows.Input;
 
 namespace Audio_Player_NightWalk
 {
-    class PlayListManagerViewModel : BaseViewModel
+    class PlayListManagerViewModel : SingeltonViewModel<PlayListManagerViewModel>
     {
 
         private AudioTreeItem? focusedtrack = null;
-
-        public static PlayListManagerViewModel Instance { get; private set; } = new PlayListManagerViewModel();
-
 
         public DisplayPlayListViewModel PlayList { get; set; }
 
@@ -61,6 +58,8 @@ namespace Audio_Player_NightWalk
         public ICommand AddTracks { get; set; }
 
 
+         
+
         private PlayListManagerViewModel()
         {
 
@@ -90,6 +89,9 @@ namespace Audio_Player_NightWalk
 
 
         }
+
+
+        
 
         public void SetFocusedTrack(TrackViewModel track)
         {

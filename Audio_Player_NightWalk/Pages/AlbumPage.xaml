@@ -22,7 +22,7 @@
         </Border>
 
 
-        <Border Padding="20" Grid.Row="1" Background="{StaticResource StormyNightBrush}" BorderThickness="2 0 0 0" BorderBrush="Aqua">
+        <Border Padding="20" Grid.Row="1" Background="{StaticResource StormyNightBrush}" BorderThickness="2 0 0 0" BorderBrush="{StaticResource LightNeonBlueBrush}">
 
             <Viewbox>
                 <Border BorderThickness="5" BorderBrush="#88333333">

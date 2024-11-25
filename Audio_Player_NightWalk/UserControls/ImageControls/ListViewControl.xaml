@@ -10,7 +10,8 @@
     <Border Background="Transparent">
 
 
-        <ListView Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemsSource="{Binding ArtWorks}">
+        <ListView Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" ItemsSource="{Binding ArtWorks}" 
+                  BorderBrush="{StaticResource DarkNeonYellowBrush}" BorderThickness="0 1 0 0">
             
 
             <ListView.ItemContainerStyle>

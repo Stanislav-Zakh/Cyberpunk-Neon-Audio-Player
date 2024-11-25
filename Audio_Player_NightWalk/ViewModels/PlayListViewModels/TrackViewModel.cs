@@ -67,15 +67,27 @@ namespace Audio_Player_NightWalk
         public PlayListViewModel ParentPlayList {  get; set; }
         public string Name { get; set; }
 
-        public TimeSpan TrackTime { get; set; }
+        public string FileName { get; set; }
 
+        private string _trackTime;
+
+        public string TrackTime
+        {
+            get => _trackTime;
+            set
+            {
+                _trackTime = value;
+                OnPropertyChanged(nameof(TrackTime));
+            }
+        }
 
         #region Constructor
         public TrackViewModel(string name, PlayListViewModel parentRef)
         {
-            this.Name = name;
 
-            this.TrackTime = new TimeSpan(0, 0, 0);
+            this.FileName = name;
+
+            this.Name = name.Substring(0, name.LastIndexOf("."));
 
             this.ParentPlayList = parentRef;
         }
@@ -134,14 +146,13 @@ namespace Audio_Player_NightWalk
             ParentPlayList.Album = this._audiFileInfo.Album;
             ParentPlayList.Year = this._audiFileInfo.Year;
             ParentPlayList.Genre = this._audiFileInfo.Genre;
-
             ParentPlayList.Cover = this._audiFileInfo.Cover;
 
         }
 
         public string GetFullPath()
         {
-            return Path.Combine(ParentPlayList.Path, this.Name);
+            return Path.Combine(ParentPlayList.Path, this.FileName);
         }
 
         #endregion

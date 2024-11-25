@@ -8,48 +8,19 @@
              d:DesignHeight="450" d:DesignWidth="800">
 
 
-    <Border BorderBrush="#CCC856" BorderThickness="0 0.0 0 0" DataContext="{x:Static local:PlayerStateViewModel.Instance}">
-
-        <Border.Background>
-            <!--
-        <ImageBrush Opacity="0.6" ViewportUnits="Absolute" Viewport="0 0 1200 400"  ImageSource="/PublicResources/Images/rainy-background.jpg">
-            
-        </ImageBrush>
-        -->
-
-            
-                                <RadialGradientBrush SpreadMethod="Repeat"  RadiusX="5" RadiusY="5"  GradientOrigin="0.0 0.0">
-
-                                    <GradientStop Color="#883c3ba3" Offset="0"/>
-
-                                    <GradientStop Color="#8809143C" Offset="0.12"/>
-
-
-                                    <GradientStop Color="#8809143C" Offset="1.0"/>
-
-
-
-
-
-                                    <!--
-     <GradientStop Color="#88210328" Offset="0"/>
-
-
-      <GradientStop Color="#88410548" Offset="1.0"/>
-     -->
-
-
-
-
-                                </RadialGradientBrush>
-                         
-        </Border.Background>
-
+    <Border BorderBrush="{StaticResource LightNeonYellowBrush}" 
+            Background="{StaticResource LightBelowBrush}" 
+            BorderThickness="0 0.0 0 0" 
+            DataContext="{x:Static local:PlayerStateViewModel.Instance}">
 
         <StackPanel>
+            
+            
+
+
             <!--#region Slider + Viz -->
             <StackPanel Height="15" Margin="0 -5 0 0">
-                <Image />
+               
                 <Slider Style="{DynamicResource PrettySlider}" Thumb.DragStarted="Slider_DragStarted" Thumb.DragCompleted="Slider_DragCompleted" Height="15" Minimum="0" Maximum="100" Value="{Binding TrackDuration}" >
 
                 </Slider> 
@@ -71,16 +42,21 @@
 
 
                 <!-- Info -->
-                <StackPanel Grid.Column="0" Margin="20 5 20 10">
-                    <TextBlock Text="{Binding SelectedTrack, Converter={local:SelectedTrackConverter}, ConverterParameter=title}"  FontSize="12" Style="{StaticResource DataTextPixel}">
+                <Border Padding="5 5 5 0" CornerRadius="10" Background="{StaticResource CosmosBrush}" BorderThickness="1" Margin="10 -1 20 4" BorderBrush="{StaticResource StealGradient}">
+                    <Border.Effect>
+                        <DropShadowEffect ShadowDepth="3"/>
+                    </Border.Effect>
+                    <StackPanel Grid.Column="0" >
+
+                        <TextBlock HorizontalAlignment="Center" Width="300" Text="{Binding SelectedTrack, Converter={local:SelectedTrackConverter}, ConverterParameter=title}"  FontSize="12" Style="{StaticResource DataTextPixel}">
                         
-                    </TextBlock>
-                    <TextBlock Text="{Binding SelectedTrack, Converter={local:SelectedTrackConverter}}" Style="{StaticResource DataTextPixel}" FontSize="16">
+                        </TextBlock>
+                        <TextBlock Width="300"  HorizontalAlignment="Center" Margin="0 5 0 0" Text="{Binding SelectedTrack, Converter={local:SelectedTrackConverter}}" Style="{StaticResource DataTextPixel}" FontSize="14">
                         
 
-                    </TextBlock>
-                </StackPanel>
-
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
                 <!--#region  Main Controls -->
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="5">
 
@@ -108,12 +84,9 @@
                 <!--#endregion-->
 
                 <StackPanel Grid.Column="5" Orientation="Horizontal" Margin="10 0 20 0 ">
-                    
-                    <Button Width="30"  Margin="8 0 8 15"  Style="{StaticResource PlayerControlButton}" >
-                        <Button.Content>
-                            <TextBlock Margin="0 1 0 0" Text="&#xf028;" FontSize="14"/>
-                        </Button.Content>
-                    </Button>
+
+                    <local:VolumeControl Margin="0 0 0 10"   TrackProgress="{Binding PlayerVolume}"/>
+
                     <Button Width="30"  Margin="8 0 8 15"  Style="{StaticResource PlayerControlButton}">
                         <Button.Content>
                             <TextBlock Margin="0 0 0 0" Text="&#xf363;" FontSize="15"/>

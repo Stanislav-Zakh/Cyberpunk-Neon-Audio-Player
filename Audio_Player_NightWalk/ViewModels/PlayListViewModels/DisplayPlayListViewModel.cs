@@ -13,12 +13,15 @@ namespace Audio_Player_NightWalk
 
         public ObservableCollection<PlayListViewModel> testCollection { get; set; }
 
-
+        /// <summary>
+        /// Get Playlist and async load all non essential data such as Track Duration.
+        /// </summary>
         public DisplayPlayListViewModel()
         {
             
             testCollection = FileManager.GetPlayLists();
 
+            TagReader.GetDurationAsync(testCollection).FireAndForeget();
         }
 
 

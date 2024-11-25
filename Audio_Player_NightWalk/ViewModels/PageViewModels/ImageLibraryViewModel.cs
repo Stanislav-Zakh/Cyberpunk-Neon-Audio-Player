@@ -13,13 +13,10 @@ using XamlAnimatedGif;
 
 namespace Audio_Player_NightWalk
 {
-    public class ImageLibraryViewModel : BaseViewModel
+    public class ImageLibraryViewModel : SingeltonViewModel<ImageLibraryViewModel>
     {
 
-
-        public static ImageLibraryViewModel Instance { get; private set; } = new ImageLibraryViewModel();
-
-        private string _displayedArt = null;
+        private string _displayedArt = string.Empty;
 
 
         /// <summary>
@@ -52,7 +49,7 @@ namespace Audio_Player_NightWalk
         #endregion
 
 
-        public ImageLibraryViewModel()
+        private ImageLibraryViewModel()
         {
 
             ArtWorks = FileManager.GetArtWorks();
@@ -60,8 +57,6 @@ namespace Audio_Player_NightWalk
             AddArtWorks = new RelayCommand(() => FileManager.OpenFileDialogAddArtWorks(ArtWorks));
 
             XORSelectorVisibility = new RelayCommand(() => ApplicationViewModel.Instance.ArtSelectorVisible ^= System.Windows.Visibility.Collapsed);
-
-            DisplayedArt = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), $"Player-Images{Path.DirectorySeparatorChar}Island.gif");
 
         }
 

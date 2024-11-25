@@ -47,7 +47,7 @@
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
-                                    <Grid Grid.Row="0" Background="{StaticResource StormyNightBrush}">
+                                    <Grid Grid.Row="0" Background="{StaticResource PunkTop}">
                                         <Grid.ColumnDefinitions>
                                             <!-- Label -->
                                             <ColumnDefinition Width="Auto"/>
@@ -58,15 +58,13 @@
                                         </Grid.ColumnDefinitions>
 
                                         <!-- Label -->
-                                        <Button Background="Transparent" Grid.Column="0">
-                                            
-                                        </Button>
-
-
+                                        
+                                        
+                                      
                                         <StackPanel Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Orientation="Horizontal" DataContext="{x:Static local:ApplicationViewModel.Instance}">
 
-                                            <Button  Style="{StaticResource ApplicationControlButton}" Content="Album" Command="{Binding DisplayAlbum}"/>
-                                            <Button  Style="{StaticResource ApplicationControlButton}" Content="Gallery" Command="{Binding DisplayImages}"/>
+                                            <Button  Style="{StaticResource ApplicationControlButton}" local:isSelected.Value="{Binding SelectedPage, Converter={local:SelectedPageConvertor}, ConverterParameter={x:Static local:CurrentPageType.Album}}"  Content="Album" Command="{Binding DisplayAlbum}"/>
+                                            <Button  Style="{StaticResource ApplicationControlButton}" local:isSelected.Value="{Binding SelectedPage, Converter={local:SelectedPageConvertor}, ConverterParameter={x:Static local:CurrentPageType.ImageLibrary}}"   Content="Gallery" Command="{Binding DisplayImages}"/>
                                             <Button  Style="{StaticResource ApplicationControlButton}" Content="Visualizer 3D"/>
 
                                         </StackPanel>

@@ -10,7 +10,7 @@
 
 
 
-    <DockPanel Background="White">
+    <DockPanel Background="{StaticResource BackStreetCommonBrush}">
         <Grid DockPanel.Dock="Top">
 
             <Grid.ColumnDefinitions>
@@ -37,7 +37,7 @@
 
         </Grid>
 
-        <Border Background="#8809143C" BorderThickness="0" DataContext="{Binding PlayList}">
+        <Border  BorderThickness="0" DataContext="{Binding PlayList}">
             <Border.Resources>
                 <Style TargetType="{x:Type ScrollBar}" BasedOn="{StaticResource MyScroll}">
 
@@ -45,18 +45,21 @@
                 </Style>
             </Border.Resources>
 
-            <TreeView Background="Transparent" BorderThickness="0" ItemsSource="{Binding testCollection}" Padding="0">
+            <TreeView Background="Transparent"  BorderThickness="0" ItemsSource="{Binding testCollection}" Padding="0">
+                
 
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="TreeViewItem" BasedOn="{StaticResource BaseContainer}">
+                        
                         <Setter Property="IsSelected" Value="{Binding Clicked, Mode=OneWayToSource}"/>
                         <Setter Property="local:isDoubleClicked.Value" Value="{Binding DoubleClicked, Mode=TwoWay}"/>
                         <Setter Property="Margin" Value="0 3 0 3"/>
                         <Style.Triggers>
                             <Trigger Property="local:isDoubleClicked.Value" Value="True">
-                                <Setter Property="Background" Value="#6FFFFF"/>
+                                <Setter Property="Background" Value="#AA173252"/>
                                 <Setter Property="Opacity" Value="0.9"/>
-                                <Setter Property="local:SelectionColor.Value" Value="White"/>
+                                <Setter Property="local:SelectionColor.Value" Value="LightBlue"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource LightNeonBlueBrush}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>

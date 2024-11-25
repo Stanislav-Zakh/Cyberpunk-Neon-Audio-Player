@@ -26,11 +26,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border  Height="2"  Width="{TemplateBinding Width}">
+                    <Border  Height="2.3"  Width="{TemplateBinding Width}">
                         <Border.Background>
                             <LinearGradientBrush  StartPoint="0 0" EndPoint="1 0">
-                                <GradientStop Color="#CCC856" Offset="0"/>
-                                <GradientStop Color="#CCC856" Offset="0.8"/>
+                                <GradientStop Color="{StaticResource LightNeonYellow}" Offset="0"/>
+                                <GradientStop Color="{StaticResource LightNeonYellow}" Offset="0.8"/>
                                 <GradientStop Color="#423F40" Offset="1.0"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -48,7 +48,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border   BorderBrush="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                    <Border BorderBrush="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -69,7 +69,7 @@
     <SolidColorBrush x:Key="SliderThumb.Track.Border" Color="#FFD6D6D6"/>
     
     <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
-        <TextBlock x:Name="grip" Height="15" Width="18" Text="&#xe445;" Margin="0 -3 0 0" FontSize="15" FontFamily="{StaticResource FontAwesome}" >
+        <TextBlock x:Name="grip" Height="15" Width="14" Text="&#xf0c3;" Margin="0 -3 0 0" FontSize="15" FontFamily="{StaticResource FontAwesome}" >
             <TextBlock.Foreground>
                 <LinearGradientBrush StartPoint="0 0" EndPoint="1 0">
                     <GradientStop Color="#C5CED4" Offset="0"/>
@@ -146,7 +146,7 @@
                 </Grid.RowDefinitions>
                 <TickBar x:Name="TopTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,0,0,2" Placement="Top" Grid.Row="0" Visibility="Collapsed"/>
                 <TickBar x:Name="BottomTick" Fill="{TemplateBinding Foreground}" Height="4" Margin="0,2,0,0" Placement="Bottom" Grid.Row="2" Visibility="Collapsed"/>
-                <Border x:Name="TrackBackground" BorderThickness="2" BorderBrush="#423F40"  Height="2" Margin="0" Grid.Row="1" VerticalAlignment="center">
+                <Border x:Name="TrackBackground" BorderThickness="2.3" BorderBrush="#423F40"  Height="2.3" Margin="0" Grid.Row="1" VerticalAlignment="center">
                     
                     <Border.Effect>
                         <DropShadowEffect ShadowDepth="100"  Color="Red"/>
@@ -192,10 +192,15 @@
     </ControlTemplate>
 
     <!--#region Vertical Slider -->
+    
+    
+    
+    
+    
 
     <ControlTemplate x:Key="SliderThumbVerticalDefault" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
-            <Path x:Name="grip" Data="M0.5,0.5 L18.5,0.5 18.5,11.5 0.5,11.5z" Fill="{StaticResource SliderThumb.Static.Background}" Stroke="{StaticResource SliderThumb.Static.Border}" Stretch="Fill"/>
+            <Path x:Name="grip" Data="M0.5,0.5 L18.5,0.5 18.5,11.5 0.5,11.5z" Fill="Transparent" Stroke="Transparent" Stretch="Fill"/>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="true">
@@ -253,8 +258,21 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
     
+    
+   
     <ControlTemplate x:Key="SliderVertical" TargetType="{x:Type Slider}">
-        <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+        <Border x:Name="border" CornerRadius="30"  BorderBrush="{StaticResource NeonFlowVert}" BorderThickness="1" SnapsToDevicePixels="True">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0 1" EndPoint="0 0">
+                    <GradientStop Color="{StaticResource LightNeonYellow}" Offset="0.0"/>
+                    <GradientStop Color="{StaticResource LightNeonBlue}" Offset="0.4"/>
+                    <GradientStop Color="{StaticResource Cosmos}" Offset="0.4"/>
+
+                </LinearGradientBrush>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="3"/>
+            </Border.Effect>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -263,24 +281,33 @@
                 </Grid.ColumnDefinitions>
                 <TickBar x:Name="TopTick" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4"/>
                 <TickBar x:Name="BottomTick" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4"/>
-                <Border x:Name="TrackBackground" Background="{StaticResource SliderThumb.Track.Background}" BorderBrush="{StaticResource SliderThumb.Track.Border}" BorderThickness="1" Grid.Column="1" HorizontalAlignment="center" Margin="0,5" Width="4.0">
+                <!-- Background -->
+                <Border x:Name="TrackBackground" Background="{StaticResource CosmosBrush}" BorderBrush="Transparent" BorderThickness="1" Grid.Column="1" HorizontalAlignment="center" Margin="0,5" Width="4.0">
                     <Canvas Margin="-1,-6">
                         <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Visibility="Hidden" Width="4.0"/>
                     </Canvas>
                 </Border>
                 <Track x:Name="PART_Track" Grid.Column="1">
+                    
+                    <!-- Bottom -->
                     <Track.DecreaseRepeatButton>
                         <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
                     </Track.DecreaseRepeatButton>
+                    
+                    <!-- Top -->
                     <Track.IncreaseRepeatButton>
                         <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
                     </Track.IncreaseRepeatButton>
+                    
+                    <!-- Controler -->
                     <Track.Thumb>
                         <Thumb x:Name="Thumb" Focusable="False" Height="11" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbVerticalDefault}" VerticalAlignment="Top" Width="18"/>
                     </Track.Thumb>
                 </Track>
             </Grid>
         </Border>
+        
+        
         <ControlTemplate.Triggers>
             <Trigger Property="TickPlacement" Value="TopLeft">
                 <Setter Property="Visibility" TargetName="TopTick" Value="Visible"/>
@@ -308,6 +335,7 @@
 
     <!--#region Slider Main-->
     <Style x:Key="PrettySlider" TargetType="{x:Type Slider}">
+        
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
@@ -320,4 +348,80 @@
         </Style.Triggers>
     </Style>
     <!--#endregion-->
+    
+    
+    <!--#region Slider Volume -->
+
+    <ControlTemplate x:Key="SliderThumbVerticalTransparent" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path x:Name="grip" Data="M0.5,0.5 L18.5,0.5 18.5,11.5 0.5,11.5z" Fill="Transparent" Stroke="Transparent" Stretch="Fill"/>
+        </Grid>
+        
+    </ControlTemplate>
+
+
+
+    <ControlTemplate x:Key="SliderVerticalTransparent" TargetType="{x:Type Slider}">
+        <Border x:Name="border"  BorderThickness="1" SnapsToDevicePixels="True">
+            
+            <Border.Effect>
+                <DropShadowEffect ShadowDepth="3"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition MinWidth="{TemplateBinding MinWidth}" Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TickBar x:Name="TopTick" Grid.Column="0" Fill="{TemplateBinding Foreground}" Margin="0,0,2,0" Placement="Left" Visibility="Collapsed" Width="4"/>
+                <TickBar x:Name="BottomTick" Grid.Column="2" Fill="{TemplateBinding Foreground}" Margin="2,0,0,0" Placement="Right" Visibility="Collapsed" Width="4"/>
+                <!-- Background -->
+                <Border x:Name="TrackBackground" Background="Transparent" BorderBrush="Transparent" BorderThickness="1" Grid.Column="1" HorizontalAlignment="center" Margin="0,5" Width="4.0">
+                    <Canvas Margin="-1,-6">
+                        <Rectangle x:Name="PART_SelectionRange" Fill="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" Visibility="Hidden" Width="4.0"/>
+                    </Canvas>
+                </Border>
+                <Track x:Name="PART_Track" Grid.Column="1">
+
+                    <!-- Bottom -->
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                    </Track.DecreaseRepeatButton>
+
+                    <!-- Top -->
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource RepeatButtonTransparent}"/>
+                    </Track.IncreaseRepeatButton>
+
+                    <!-- Controler -->
+                    <Track.Thumb>
+                        <Thumb x:Name="Thumb" Focusable="False" Height="10" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbVerticalTransparent}" VerticalAlignment="Top" Width="30"/>
+                    </Track.Thumb>
+                </Track>
+            </Grid>
+        </Border>
+
+        
+    </ControlTemplate>
+
+
+
+
+    <Style x:Key="VolumeSlider" TargetType="{x:Type Slider}">
+
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Foreground" Value="{StaticResource SliderThumb.Static.Foreground}"/>
+        <Setter Property="Template" Value="{StaticResource SliderHorizontal}"/>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template" Value="{StaticResource SliderVerticalTransparent}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <!--#endregion-->
+    
 </ResourceDictionary>

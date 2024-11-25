@@ -2,11 +2,46 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
 
-    <LinearGradientBrush x:Key="DataBrush"  StartPoint="0 0" EndPoint="1 0">
-        <GradientStop Color="#CCC856" Offset="0"/>
-        <GradientStop Color="#CCC856" Offset="1.0"/>
+    
+    
+    
+
+    <Color x:Key="LightNeonYellow">#CCC856</Color>
+    <SolidColorBrush x:Key="LightNeonYellowBrush" Color="{StaticResource LightNeonYellow}"/>
+
+    <Color x:Key="DarkNeonYellow">#DCD866</Color>
+    <SolidColorBrush x:Key="DarkNeonYellowBrush" Color="{StaticResource DarkNeonYellow}"/>
+
+    <Color x:Key="LightNeonBlue">#ADD8E6</Color>
+    <SolidColorBrush x:Key="LightNeonBlueBrush" Color="{StaticResource LightNeonBlue}"/>
+
+    <Color x:Key="BackStreetCommon">#162539</Color>
+    <SolidColorBrush x:Key="BackStreetCommonBrush" Color="{StaticResource BackStreetCommon}"/>
+
+    <Color x:Key="Cosmos">#8809143C</Color>
+    <SolidColorBrush x:Key="CosmosBrush" Color="{StaticResource Cosmos}"/>
+
+    <Color x:Key="CosmosSolid">#09143C</Color>
+    <SolidColorBrush x:Key="CosmosSolidBrush" Color="{StaticResource CosmosSolid}"/>
+
+
+    <LinearGradientBrush x:Key="NeonFlowVert" StartPoint="0 0" EndPoint="0 1">
+        <GradientStop Offset="0" Color="{StaticResource LightNeonBlue}" />
+        <GradientStop Offset="1" Color="{StaticResource LightNeonYellow}" />
+
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="NeonFlowHori" StartPoint="0 0" EndPoint="1 0">
+        <GradientStop Offset="0" Color="{StaticResource LightNeonBlue}" />
+        <GradientStop Offset="1" Color="{StaticResource LightNeonYellow}" />
+
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="DataBrush"  StartPoint="0 0" EndPoint="1 0">
+        <GradientStop Color="{StaticResource LightNeonYellow}" Offset="0"/>
+        <GradientStop Color="{StaticResource LightNeonYellow}" Offset="1.0"/>
+    </LinearGradientBrush>
 
     <RadialGradientBrush x:Key="StormyNightBrush" SpreadMethod="Repeat"  RadiusX="5" RadiusY="2"  GradientOrigin="0.5 1.0">
 
@@ -15,9 +50,47 @@
         <GradientStop Color="#8809143C" Offset="0.12"/>
 
 
+        <GradientStop Color="#88162539" Offset="1.0"/>
+
+    </RadialGradientBrush>
+
+    <RadialGradientBrush x:Key="LightBelowBrush" SpreadMethod="Repeat"  RadiusX="5" RadiusY="5"  GradientOrigin="0.5 1.0">
+
+        <GradientStop Color="#883c3ba3" Offset="0"/>
+
+        <GradientStop Color="#88162539" Offset="0.12"/>
+
         <GradientStop Color="#8809143C" Offset="1.0"/>
 
     </RadialGradientBrush>
+
+
+    <RadialGradientBrush x:Key="PunkTop" SpreadMethod="Repeat"  RadiusX="10" RadiusY="1"  GradientOrigin="0.5 1.0">
+
+        <GradientStop Color="LightBlue" Offset="0.06"/>
+
+        <GradientStop Color="#162539" Offset="0.06"/>
+
+
+        <GradientStop Color="#8809143C" Offset="1.0"/>
+
+    </RadialGradientBrush>
+
+
+
+    <RadialGradientBrush x:Key="PunkCommon" SpreadMethod="Repeat"  RadiusX="10" RadiusY="1"  GradientOrigin="0.5 1.0">
+
+        <GradientStop Color="LightBlue" Offset="0.06"/>
+
+        <GradientStop Color="#162539" Offset="0.06"/>
+
+
+        <GradientStop Color="#8809143C" Offset="1.0"/>
+
+    </RadialGradientBrush>
+
+
+
 
 
 

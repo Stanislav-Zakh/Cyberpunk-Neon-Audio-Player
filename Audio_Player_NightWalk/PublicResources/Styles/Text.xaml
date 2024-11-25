@@ -1,15 +1,122 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Audio_Player_NightWalk">
 
 
+    
+    
+    
 
     <Style x:Key="DataTextPixel" TargetType="{x:Type TextBlock}">
 
         <Setter Property="FontFamily" Value="{StaticResource Grotesque}"/>
         <Setter  Property="Background"  Value="Transparent"/>
 
-        <Setter Property="Foreground" Value="LightBlue"/>
+        <Setter Property="Foreground" Value="{StaticResource LightNeonBlueBrush}"/>
  
     </Style>
     
+    
+    <Style x:Key="FormTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource LightNeonBlueBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource LightNeonBlueBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource LightNeonYellowBrush}"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource LightNeonYellowBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsKeyboardFocused" Value="true">
+                            
+                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource DarkNeonYellowBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter Property="Foreground"  Value="{StaticResource LightNeonYellowBrush}"/>
+            </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                    <Condition Property="IsSelectionActive" Value="false"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style x:Key="showState" TargetType="TextBlock">
+        <Setter Property="local:isPressed.Value" Value="False"/>
+    </Style>
+
+
+    <Style x:Key="PlayPause" TargetType="TextBlock" BasedOn="{StaticResource showState}">
+        <Setter Property="Text" Value="&#xf04b;"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Margin" Value="2 0 0 0"/>
+
+
+        <Style.Triggers>
+            <Trigger Property="local:isPressed.Value" Value="False">
+                <Setter Property="Text" Value="&#xf04c;"/>
+                <Setter Property="Margin" Value="0"/>
+            </Trigger>
+
+            <Trigger Property="local:isPressed.Value" Value="True">
+                <Setter Property="Text" Value="&#xf04b;"/>
+                <Setter Property="Margin" Value="2 0 0 0"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="VolumeMute" TargetType="TextBlock" BasedOn="{StaticResource showState}">
+        <!--Volume Default-->
+        <Setter Property="Text" Value="&#xf028;"/>
+        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="Margin" Value="2 0 0 0"/>
+        <Setter Property="Foreground" Value="{StaticResource LightNeonBlueBrush}"/>
+
+
+        <Style.Triggers>
+            <!--Volume-->
+            <Trigger Property="local:isPressed.Value" Value="False">
+                <Setter Property="Text" Value="&#xf028;"/>
+                <Setter Property="Margin" Value="0"/>
+            </Trigger>
+
+            <!--Mutted-->
+            <Trigger Property="local:isPressed.Value" Value="True">
+                <Setter Property="Text" Value="&#xf6a9;"/>
+                <Setter Property="Margin" Value="2 0 0 0"/>
+            </Trigger>
+
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource LightNeonYellowBrush}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    
+    
+
+
 </ResourceDictionary>

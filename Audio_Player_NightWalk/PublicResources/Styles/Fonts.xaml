@@ -2,10 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <FontFamily x:Key="FontAwesome">pack://application;,,,/PublicResources/Fonts/#Font Awesome 6 Free Solid</FontFamily>
-    <FontFamily x:Key="Maelstrom">pack://application;,,,/PublicResources/Fonts/#MAELSTROM</FontFamily>
     <FontFamily x:Key="Don">pack://application;,,,/PublicResources/Fonts/#Don Graffiti</FontFamily>
     <FontFamily x:Key="Pixy">pack://application;,,,/PublicResources/Fonts/#PIXY</FontFamily>
     <FontFamily x:Key="Grotesque">pack://application;,,,/PublicResources/Fonts/#Terminal Grotesque Open</FontFamily>
+    
     
 
 

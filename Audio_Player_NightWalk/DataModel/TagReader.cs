@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
@@ -64,6 +66,49 @@ namespace Audio_Player_NightWalk
                )
             { Cover = GetImage(file) };
         }
+
+
+
+        /// <summary>
+        /// Async read running time for each track in the playlist and computes total running time of the playlist.
+        /// </summary>
+        /// <param name="playlist"></param>
+        /// <returns></returns>
+        public static async Task GetAudioDurationAsync(PlayListViewModel playlist)
+        {
+            await Task.Run
+                (
+                  () =>
+                  {
+                      TimeSpan totalTime = TimeSpan.FromSeconds(0);
+
+                      foreach (var track in playlist.Tracks)
+                      {
+                          using (var file = TagLib.File.Create(track.GetFullPath()))
+                          {
+                              totalTime = totalTime.Add(file.Properties.Duration);
+                              track.TrackTime = FormatRunningTime(file.Properties.Duration);
+                          }
+                      }
+
+                       playlist.PlaylistTotalTime = FormatRunningTime(totalTime);
+                  });  
+        }
+
+        /// <summary>
+        /// Async Read Duration data for all Playlists and waits for them in parallel to complete.  
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public static async Task GetDurationAsync(ObservableCollection<PlayListViewModel> collection)
+        {
+            var duration = collection.Select((playlist) => GetAudioDurationAsync(playlist));
+
+            await Task.WhenAll(duration.ToArray());
+        }
+
+
+
 
 
         #endregion
@@ -148,6 +193,12 @@ namespace Audio_Player_NightWalk
             _editFile.Tag.Title = info.Title;
             _editFile.Tag.Album = info.Album;
 
+            ///TODO: add regex o the form and potentially remove this thing.
+            if (UInt32.TryParse(info.Date, out uint date))
+            {
+                _editFile.Tag.Year = date > 9999 ? 9999 : date; // years greater 9999 cannot be stored by the most tagging formats.
+            }
+            
             if (_editFile.Tag.Genres.Length > 0)
             {
                 var genre = _editFile.Tag.Genres;

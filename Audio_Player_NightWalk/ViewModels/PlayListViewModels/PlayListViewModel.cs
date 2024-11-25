@@ -161,7 +161,20 @@ namespace Audio_Player_NightWalk
         /// <summary>
         /// Total Time of all Tracks in the Playlist
         /// </summary>
-        public TimeSpan PlaylistTotalTime { get; set; }
+        /// 
+        private string _playlistTotalTime;
+        public string PlaylistTotalTime {
+
+            get => _playlistTotalTime;
+                
+            set
+            {
+                _playlistTotalTime = value;
+                OnPropertyChanged(nameof(PlaylistTotalTime));
+            } 
+        
+        
+        }
 
         #region Contained Track's references
 
@@ -190,12 +203,16 @@ namespace Audio_Player_NightWalk
 
             this.Name = name;
 
-            this.PlaylistTotalTime = new TimeSpan(0, 0, 0);
+            //this.PlaylistTotalTime = new TimeSpan(0, 0, 0);
 
-            Tracks = FileManager.GetTracks(Path, this);          
+            Tracks = FileManager.GetTracks(Path, this);
         }
+
         #endregion
 
+
+
+        
 
         #region Selecting Tracks
 
